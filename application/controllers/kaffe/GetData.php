@@ -49,7 +49,7 @@ class GetData {
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'distance'=>$row[9], 'opening_hours'=>$row[8]));
+			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'distance'=>$row[10], 'opening_hours'=>$row[9]));
 		}
 
 
