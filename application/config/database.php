@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'rdbms.strato.de',
-	'username' => 'U2909449',
-	'password' => 'Xkznalae86!',
-	'database' => 'DB2909449',
+	'hostname' => 'localhost',
+	'username' => 'cdol',
+	'password' => 'xkznal86',
+	'database' => 'cdol',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
