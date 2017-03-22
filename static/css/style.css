@@ -1,0 +1,132 @@
+@import url(http://fonts.googleapis.com/css?family=Kreon:400,700);
+
+.bg-1 {
+	background-image: url('/cdol/static/img/slide1.jpeg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.bg-2 {
+	background-image: url('/cdol/static/img/slide2.jpeg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.bg-3 {
+	background-image: url('/cdol/static/img/slide1.jpeg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.bg-4 {
+	padding-top:30px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(20,20,20,0.2)),to(rgba(255,255,255,0)), color-stop(1,#000));
+}
+
+
+.func {
+    margin: 10px;
+    height: 30px;
+}
+
+.pagination{
+    padding: 20px 0 40px 0;
+    text-align: center;
+}
+
+.none {
+    padding: 50px 0 50px 0;
+    text-align: center;
+    color: #999;
+}
+
+.memo {
+}
+
+.memo .member {
+    font-weight:normal;
+}
+
+.memo h3.head {
+    /*margin:10px 0 10px 0;*/
+    margin:0 0 10px 0;
+    padding:20px;
+    background-color:#667378;
+    color:#fff;
+}
+
+.memo h3.head span {
+    font:normal 11px 'gulim';
+    color:#fff;
+    margin-left:10px;
+}
+
+.memo .info {
+    font:normal 11px 'gulim';
+    color:#777;
+    line-height:20px;
+    margin:10px 0 0 10px;
+}
+
+.memo .all_check {
+    margin:10px 0 0 10px;
+    height:40px;
+    color:#999;
+
+}
+.memo .all_check span {
+    margin-left:0px;
+}
+
+.memo .item {
+    padding:0 0 5px 0;
+    margin:0 10px 10px 10px;
+    border-bottom:1px solid #ddd;
+}
+
+.memo .item .checkbox {
+    float:left;
+    width:30px;
+}
+
+.memo .item .name {
+    margin:0 0 0 10px;
+}
+
+.memo .item .name img {
+    /*display:none;*/
+}
+
+.memo .item .name .search {
+    margin:0 0 0 5px;
+}
+
+.memo .item .name i {
+    font-weight:normal;
+    font-size:10px;
+    color:#777;
+}
+
+.memo .item .date {
+    margin:0 0 0 10px;
+    font:normal 11px 'dotum';
+    color:#999;
+}
+
+.memo .item .content {
+    margin:15px 0 10px 29px;
+    line-height:17px;
+}
+
+.memo .item .content.noread a {
+    color:#444;
+    font-weight:bold;
+}
+
+.memo .item .content.read a {
+    color:#999;
+
+}

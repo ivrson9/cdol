@@ -1,0 +1,37 @@
+// DB 생성 & 유저생성
+CREATE DATABASE KAFFE;
+CREATE USER 'cdol'@'localhost' identified by 'xkznal86';
+GRANT ALL PRIVILEGES ON cdol.* to cdol@localhost;
+
+// List Table
+create table cafe (
+  no int unsigned not null primary key auto_increment,
+  name varchar(100) not null,
+  address varchar(200),
+  latitude double,
+  longitude double,
+  rating int unsigned default 0,
+  wifi int unsigned default 0,
+  power int unsigned default 0,
+  opening_hours varchar(200),
+  isDel boolean default false
+);
+INSERT INTO `cafe`(`name`, `address`, `latitude`, `longitude`) VALUES ('westberlin bar&shop', 'Friedrichstraße 215, 10969 Berlin', 52.505666, 13.390473 );
+
+// Comment
+create table cafe_comment (
+  comment_no int unsigned not null primary key auto_increment,
+  id varchar(20) not null,
+  comment text not null,
+  comment_date datetime not null,
+  cafe_no int unsigned not null,
+  isDel boolean default false
+);
+
+
+SELECT *,	(6371*acos(cos(radians(52.522486))*cos(radians(latitude))*cos(radians(longitude)-radians(13.409629))+sin(radians(52.522486))*sin(radians(latitude))))
+AS distance
+FROM cafe
+HAVING distance <= 1
+ORDER BY distance
+LIMIT 0,1000
