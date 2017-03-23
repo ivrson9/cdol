@@ -67,7 +67,7 @@ class GetData {
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[9]));
+			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8]));
 		}
 
 		// Coment List
@@ -79,7 +79,7 @@ class GetData {
 			array_push($c_result, array('comment_no'=>$c_row[0], 'id'=>$c_row[1], 'comment'=>$c_row[2], 'comment_date'=>$c_row[3]));
 		}
 
-		$json = json_encode(array("cafe_result"=>$result, "comment_result"=>$c_r));
+		$json = json_encode(array("cafe_result"=>$result, "comment_result"=>$c_result));
 
 		echo $json;
 	}
