@@ -2,7 +2,13 @@
 header("Content-Type: text/html;charset=UTF-8");
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Cafe {
+class Cafe extends MY_Controller{
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->database();
+		$this->load->model('cafe_model');
+	}
 
 	function getList($con, $latitude, $longitude){
 		$res = mysqli_query($con,"SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
@@ -53,6 +59,58 @@ class Cafe {
 
 	}
 
+	function add(){
+		$lat = $this->input->post('latitude');
+		$lng = $this->input->post('longitude');
+		$name = $this->input->post('name');
+		$wifi = $this->input->post('wifi');
+		$power = $this->input->post('power');
+
+		$search_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+		$detail_url = "https://maps.googleapis.com/maps/api/place/details/json?";
+
+		// Search
+		$search_data = http_build_query(
+			array(
+				'location' => $lat.",".$lng,
+				'radius' => '50',
+				'name' => $name,
+				'key' => 'AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE'
+			)
+		);
+
+		$google_search_result = file_get_contents($search_url.$search_data, true);
+		$search_get = json_decode($google_search_result);
+
+		$place_id = $search_get->results[0]->place_id;
+
+		// Detail
+		$detail_data = http_build_query(
+			array(
+				'place_id' => $place_id,
+				'key' => 'AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE'
+			)
+		);
+
+		$google_detail_result = file_get_contents($detail_url.$detail_data, true);
+		$detail_get = json_decode($google_detail_result);
+
+		$result = array();
+		$result["weekday_text"] = $detail_get->result->opening_hours->weekday_text;
+		$opening_hours =  json_encode($result, JSON_UNESCAPED_UNICODE);
+
+		$this->cafe_model->add(array(
+				'name'=>$name,
+				'latitude'=>$lat,
+				'longitude'=>$lng,
+				'wifi'=>$wifi,
+				'power'=>$power,
+				'opening_hours'=>$opening_hours,
+				'google_id'=>$place_id
+				));
+
+		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
+	}
 	// 장소 id(place_id) 가져온 후 opening data 가져와 DB에 update
 	function setGoogleData($con, $no){
 		// $res = mysqli_query($con,"SELECT opening_hours From cafe Where no=".$no);
