@@ -4,29 +4,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Comment {
 
-	function index() {
-		$con=mysqli_connect("127.0.0.1","cdol","xkznal86","cdol");
-		$function = $_GET['fn'];
-
-		if (mysqli_connect_errno($con)){
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
-
-		mysqli_set_charset($con,"utf8");
-
-		$cafeNo = $_GET['no'];
-
-		if( $function == "add") {
-			$id = $_GET['id'];
-			$comment = $_GET['comment'];
-			$this->addComment($con, $id, $comment, $cafeNo);
-		} else if ($function == "List"){
-			$this->getList($con, $cafeNo);
-		}
-
-		mysqli_close($con);
-	}
-
 	function addComment($con, $id, $comment, $cafeNo){
 		// DB Update
 		$sql = "INSERT INTO cafe_comment (id, comment, comment_date, cafe_no) VALUES ('". $id ."', '". $comment ."', NOW(),". $cafeNo .")";

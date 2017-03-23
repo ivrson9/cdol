@@ -14,6 +14,7 @@ create table cafe (
   wifi int unsigned default 0,
   power int unsigned default 0,
   opening_hours varchar(200),
+  google_id varchar(200),
   isDel boolean default false
 );
 INSERT INTO `cafe`(`name`, `address`, `latitude`, `longitude`) VALUES ('westberlin bar&shop', 'Friedrichstraße 215, 10969 Berlin', 52.505666, 13.390473 );
