@@ -22,7 +22,8 @@ class GetData {
 		} else if ( $function == "Item") {
 			$no=$_GET['no'];
 
-			$this->setGoogleData($con, $no);
+			$this->getItem($con, $no);
+			//$this->setGoogleData($con, $no);
 		}
 
 		mysqli_close($con);
@@ -33,7 +34,7 @@ class GetData {
 	}
 
 	function getList($con, $latitude, $longitude){
-		$res = mysqli_query($con,"SELECT *,
+		$res = mysqli_query($con,"SELECT no,name,address,rating,
 									(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 									AS distance
 									FROM cafe
@@ -49,12 +50,37 @@ class GetData {
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'distance'=>$row[10], 'opening_hours'=>$row[9]));
+			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'rating'=>$row[3],  'distance'=>$row[4]));
 		}
 
 
 		$json = json_encode(array("result"=>$result));
 		//echo stripslashes($this->unistr_to_xnstr($json));
+		echo $json;
+	}
+
+	function getItem($con, $no){
+		// Cafe Data
+		$res = mysqli_query($con, "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours
+										FROM cafe
+										WHERE no =".$no);
+		$result = array();
+
+		while($row = mysqli_fetch_array($res)){
+			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[9]));
+		}
+
+		// Coment List
+		$c_res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$no." ORDER BY comment_date");
+
+		$c_result = array();
+
+		while($c_row = mysqli_fetch_array($c_res)){
+			array_push($c_result, array('comment_no'=>$c_row[0], 'id'=>$c_row[1], 'comment'=>$c_row[2], 'comment_date'=>$c_row[3]));
+		}
+
+		$json = json_encode(array("cafe_result"=>$result, "comment_result"=>$c_r));
+
 		echo $json;
 	}
 
