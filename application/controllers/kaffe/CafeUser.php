@@ -38,7 +38,14 @@ class CafeUser {
 
 		if ($bookmark[0] != null && $bookmark[0] != ""){
 			$bookmark_array = json_decode($bookmark[0])->result;
+
+			foreach ($bookmark_array as $value){
+				if($value == $no){
+					return 0;
+				}
+			}
 		}
+
 		array_push($bookmark_array, $no);
 		$bookmark = json_encode(array("result"=>$bookmark_array));
 
