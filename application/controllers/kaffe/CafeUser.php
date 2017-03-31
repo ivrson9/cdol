@@ -41,7 +41,8 @@ class CafeUser {
 
 			foreach ($bookmark_array as $value){
 				if($value == $no){
-					echo "Already";
+					$error_json = json_encode(array("result"=>""));
+					echo $error_json;
 					return ;
 				}
 			}
