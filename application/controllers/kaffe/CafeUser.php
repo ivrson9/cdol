@@ -20,6 +20,8 @@ class CafeUser {
 		// DB Update
 		$sql = "INSERT INTO cafe_user (id, email, name, photo, signupChannel) VALUES ('". $id ."', '". $email ."', '". $name ."', '". $photo ."', '". $channel ."')";
 
+		mysqli_query($con, $sql);
+
 		$this->getUser($con, $email);
 		// if (mysqli_query($con, $sql)) {
 		// 	echo "Record updated successfully";
