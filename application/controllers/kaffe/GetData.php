@@ -29,6 +29,11 @@ class GetData {
 
 			$comment = new Comment();
 			$comment->getList($con, $no);
+		} else if ($function == "userG"){
+			$email = $_GET['email'];
+
+			$user = new CafeUser();
+			$user->getUser($con, $email);
 		} else if ($function == "userA"){
 			$id=$_GET['id'];
 			$email=$_GET['email'];
@@ -38,6 +43,12 @@ class GetData {
 
 			$user = new CafeUser();
 			$user->signIn($con, $id, $email, $name, $photo, $channel);
+		} else if ($function == "userBA"){
+			$no=$_GET['no'];
+			$email  = $_GET['email'];
+
+			$user = new CafeUser();
+			$user->addBookmark($con, $no, $email);
 		}
 
 		mysqli_close($con);
