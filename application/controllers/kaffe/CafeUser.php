@@ -41,8 +41,8 @@ class CafeUser {
 
 			foreach ($bookmark_array as $value){
 				if($value == $no){
-					echo "Already"
-					return 0;
+					echo "Already";
+					return ;
 				}
 			}
 		}
