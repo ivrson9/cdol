@@ -27,7 +27,8 @@ class Cafe extends MY_Controller{
 		$result = array();
 		while($row = mysqli_fetch_array($res)){
 			$google_id = $row[9];
-			$open_now = $this->getOpennow($google_id);
+			// $open_now = $this->getOpennow($google_id);
+			$open_now = false;
 
 			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8],
 				'open_now'=>$open_now, 'distance'=>$row[10]));

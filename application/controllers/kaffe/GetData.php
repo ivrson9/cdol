@@ -28,6 +28,15 @@ class GetData {
 
 			$comment = new Comment();
 			$comment->getList($con, $no);
+		} else if ($function == "userA"){
+			$id=$_GET['id'];
+			$email=$_GET['id'];
+			$name=$_GET['id'];
+			$photo=$_GET['id'];
+			$channel = $_GET['channel'];
+
+			$user = new CafeUser();
+			$user->signIn($con, $id, $email, $name, $photo, $channel);
 		}
 
 		mysqli_close($con);
