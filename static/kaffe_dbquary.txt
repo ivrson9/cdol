@@ -22,7 +22,7 @@ INSERT INTO `cafe`(`name`, `address`, `latitude`, `longitude`) VALUES ('westberl
 // cafe User ( 0: local , 1: google , 2:facebook)
 create table cafe_user (
   id varchar(100) NOT NULL,
-  email varchar(50) NOT NULL,
+  email varchar(50) NOT NULL primary key,
   name varchar(50),
   photo varchar(100),
   bookmark text,

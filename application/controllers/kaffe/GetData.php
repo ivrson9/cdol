@@ -3,6 +3,7 @@ header("Content-Type: text/html;charset=UTF-8");
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once "Cafe.php";
 require_once "Comment.php";
+require_once "CafeUser.php";
 
 class GetData {
 
@@ -30,9 +31,9 @@ class GetData {
 			$comment->getList($con, $no);
 		} else if ($function == "userA"){
 			$id=$_GET['id'];
-			$email=$_GET['id'];
-			$name=$_GET['id'];
-			$photo=$_GET['id'];
+			$email=$_GET['email'];
+			$name=$_GET['name'];
+			$photo=$_GET['photo'];
 			$channel = $_GET['channel'];
 
 			$user = new CafeUser();
