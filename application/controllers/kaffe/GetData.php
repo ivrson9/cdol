@@ -29,6 +29,11 @@ class GetData {
 
 			$comment = new Comment();
 			$comment->getList($con, $no);
+		} else if ($function == "comD"){
+			$comment_no = $_GET['commentNo'];
+
+			$comment = new Comment();
+			$comment->delComment($con, $comment_no);
 		} else if ($function == "userG"){
 			$email = $_GET['email'];
 

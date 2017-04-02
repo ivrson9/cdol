@@ -16,7 +16,7 @@ class Comment {
 	}
 
 	function getList($con, $cafeNo){
-		$res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$cafeNo." ORDER BY comment_date");
+		$res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$cafeNo."AND isDel = FALSE ORDER BY comment_date");
 
 		$result = array();
 
@@ -28,6 +28,16 @@ class Comment {
 		$json = json_encode(array("result"=>$result));
 
 		echo $json;
+	}
+
+	function delComment($con, $comment_no){
+		$sql = "UPDATE cafe_comment SET isDel = true WHERE comment_no = ".$comment_no;
+
+		if (mysqli_query($con, $sql)) {
+			echo "Record updated successfully";
+		} else {
+			echo "Error updating record: " . mysqli_error($con);
+		}
 	}
 }
 ?>

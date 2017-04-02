@@ -7,7 +7,7 @@ class Cafe_model extends CI_Model {
     }
 
     function gets_user(){
-        return $this->db->query("SELECT * FROM user")->result();
+        return $this->db->query("SELECT * FROM user WHERE isDel = FALSE")->result();
     }
 
     function add($option)

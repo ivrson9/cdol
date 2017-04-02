@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class CafeUser {
 	function getUser($con, $email){
-		$sql = "SELECT id, email, name, photo, bookmark FROM cafe_user WHERE email = '".$email."'";
+		$sql = "SELECT id, email, name, photo, bookmark FROM cafe_user WHERE email = '".$email."' AND isDel = FALSE";
 
 		$result = mysqli_query($con, $sql);
 		$user = mysqli_fetch_row($result);
@@ -41,8 +41,8 @@ class CafeUser {
 
 			foreach ($bookmark_array as $value){
 				if($value == $no){
-					$error_json = json_encode(array("result"=>"Already"));
-					echo $error_json;
+					$result_json = json_encode(array("result"=>"Already"));
+					echo $result_json;
 					return ;
 				}
 			}
@@ -54,7 +54,8 @@ class CafeUser {
 		$updateSql = "UPDATE cafe_user SET bookmark = '".$bookmark."' WHERE email = '".$email."'";
 
 		if (mysqli_query($con, $updateSql)) {
-			echo "Record updated successfully";
+			$result_json = json_encode(array("result"=>"Success"));
+			echo $result_json;
 		} else {
 			echo "Error updating record: " . mysqli_error($con);
 		}
