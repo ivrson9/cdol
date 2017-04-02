@@ -18,11 +18,12 @@ class GetData {
 		mysqli_set_charset($con,"utf8");
 
 		if( $function == "cafeL") {
-			$latitude = $_GET['lat'];
-			$longitude = $_GET['lng'];
+			$latitude = (empty($_GET['lat']))? "" : $_GET['lat'];
+			$longitude = (empty($_GET['lng']))? "" : $_GET['lng'];
+			$bookmark = (empty($_GET['bookmark']))? "" : $_GET['bookmark'];
 
 			$cafe = new Cafe();
-			$cafe->getList($con, $latitude, $longitude);
+			$cafe->getList($con, $latitude, $longitude, $bookmark);
 
 		}  else if ($function == "comL"){
 			$no=$_GET['no'];

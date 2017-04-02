@@ -10,22 +10,43 @@ class Cafe extends MY_Controller{
 		$this->load->model('cafe_model');
 	}
 
-	function getList($con, $latitude, $longitude){
-		$res = mysqli_query($con,"SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
-									(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
-									AS distance
-									FROM cafe
-									WHERE isDel = FALSE
-									ORDER BY distance
-									LIMIT 0,1000");
-		// $res = mysqli_query($con,"SELECT *,
-		// 							(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
-		// 							AS distance
-		// 							FROM cafe
-		//							WHERE isDel = FALSE
-		// 							HAVING distance <= 20
-		// 							ORDER BY distance
-		// 							LIMIT 0,1000");
+	function getList($con, $latitude, $longitude, $bookmark){
+		if( $bookmark == ""){
+			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+					AS distance
+					FROM cafe
+					WHERE isDel = FALSE
+					ORDER BY distance
+					LIMIT 0,1000";
+			// $sql = "SELECT *,
+			// 		(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+			// 		AS distance
+			// 		FROM cafe
+			// 		WHERE isDel = FALSE
+			// 		HAVING distance <= 20
+			// 		ORDER BY distance
+			// 		LIMIT 0,1000";
+		} else {
+			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+					AS distance
+					FROM cafe
+					WHERE isDel = FALSE AND no IN (";
+
+			$b_list = json_decode($bookmark);
+			$cnt = 0;
+			foreach ($b_list->result as $value){
+				if( $cnt != 0 )
+					$sql = $sql.",";
+				$sql = $sql.$value;
+				$cnt++;
+			}
+			$sql = $sql.") ORDER BY distance";
+		}
+
+		$res = mysqli_query($con, $sql);
+
 		$result = array();
 		while($row = mysqli_fetch_array($res)){
 			$google_id = $row[9];
