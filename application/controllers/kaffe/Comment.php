@@ -16,7 +16,7 @@ class Comment {
 	}
 
 	function getList($con, $cafeNo){
-		$res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$cafeNo."AND isDel = FALSE ORDER BY comment_date");
+		$res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$cafeNo." AND isDel = FALSE ORDER BY comment_date");
 
 		$result = array();
 
