@@ -36,7 +36,7 @@ class Cafe extends MY_Controller{
 
 			$b_list = explode(",", $bookmark);
 			$cnt = 0;
-			foreach ($b_list->result as $value){
+			foreach ($b_list as $value){
 				if( $cnt != 0 )
 					$sql = $sql.",";
 				$sql = $sql.$value;
