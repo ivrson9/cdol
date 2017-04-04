@@ -34,7 +34,7 @@ class Cafe extends MY_Controller{
 					FROM cafe
 					WHERE isDel = FALSE AND no IN (";
 
-			$b_list = json_decode($bookmark);
+			$b_list = explode(",", $bookmark);
 			$cnt = 0;
 			foreach ($b_list->result as $value){
 				if( $cnt != 0 )

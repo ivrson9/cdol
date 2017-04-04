@@ -32,13 +32,13 @@ class CafeUser {
 
 	function addBookmark($con, $no, $email){
 		$sql = "SELECT bookmark FROM cafe_user WHERE email='".$email."'";
-		$result = mysqli_query($con, $sql);
-		$bookmark = mysqli_fetch_row($result);
+		$list = mysqli_query($con, $sql);
+		$bookmark = mysqli_fetch_row($list);
 		$bookmark_array = array();
 
 		if ($bookmark[0] != null && $bookmark[0] != ""){
-			$bookmark_array = json_decode($bookmark[0])->result;
-
+			$bookmark_array = explode(",", $bookmark[0]);   // String to Array
+			//$bookmark_array = json_decode($bookmark[0])->result;
 			foreach ($bookmark_array as $value){
 				if($value == $no){
 					$result_json = json_encode(array("result"=>"Already"));
@@ -49,7 +49,7 @@ class CafeUser {
 		}
 
 		array_push($bookmark_array, $no);
-		$bookmark = json_encode(array("result"=>$bookmark_array));
+		$bookmark = implode(",", $bookmark_array);  // Array to String
 
 		$updateSql = "UPDATE cafe_user SET bookmark = '".$bookmark."' WHERE email = '".$email."'";
 
