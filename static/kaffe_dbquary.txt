@@ -38,6 +38,7 @@ create table cafe_comment (
   comment_no int unsigned not null primary key auto_increment,
   id varchar(20) not null,
   comment text not null,
+  rating double unsigned,
   comment_date datetime not null,
   cafe_no int unsigned not null,
   isDel boolean default false
