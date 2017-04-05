@@ -16,12 +16,14 @@ class Comment {
 	}
 
 	function getList($con, $cafeNo){
-		$res = mysqli_query($con, "SELECT * FROM cafe_comment WHERE cafe_no = ".$cafeNo." AND isDel = FALSE ORDER BY comment_date");
+		$res = mysqli_query($con, "SELECT c.comment_no, c.id, c.comment, c.comment_date, u.photo
+										FROM cafe_comment c join cafe_user u
+										WHERE c.cafe_no = ".$cafeNo." AND c.isDel = FALSE ORDER BY c.comment_date");
 
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('comment_no'=>$row[0], 'id'=>$row[1], 'comment'=>$row[2], 'comment_date'=>$row[3]));
+			array_push($result, array('comment_no'=>$row[0], 'id'=>$row[1], 'comment'=>$row[2], 'comment_date'=>$row[3], 'photo'=>$row[4]));
 		}
 
 

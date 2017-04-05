@@ -4,6 +4,8 @@ CREATE USER 'cdol'@'localhost' identified by 'xkznal86';
 GRANT ALL PRIVILEGES ON cdol.* to cdol@localhost;
 
 // List Table (Rating default 10)
+// wifi : none, restricted, not free, free
+// power : none, a few, many
 create table cafe (
   no int unsigned not null primary key auto_increment,
   name varchar(100) not null,
@@ -16,6 +18,7 @@ create table cafe (
   opening_hours text,
   google_id varchar(200),
   isDel boolean default false
+  etc text
 );
 INSERT INTO `cafe`(`name`, `address`, `latitude`, `longitude`) VALUES ('westberlin bar&shop', 'Friedrichstraße 215, 10969 Berlin', 52.505666, 13.390473 );
 
