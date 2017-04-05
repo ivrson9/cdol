@@ -18,7 +18,7 @@ class Comment {
 	function getList($con, $cafeNo){
 		$res = mysqli_query($con, "SELECT c.comment_no, c.id, c.comment, c.rating, c.comment_date, u.photo
 										FROM cafe_comment c join cafe_user u
-										WHERE c.cafe_no = ".$cafeNo." AND c.isDel = FALSE ORDER BY DESC c.comment_date");
+										WHERE c.cafe_no = ".$cafeNo." AND c.isDel = FALSE ORDER BY c.comment_date DESC");
 
 		$result = array();
 
