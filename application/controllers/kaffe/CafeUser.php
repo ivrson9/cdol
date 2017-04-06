@@ -17,17 +17,16 @@ class CafeUser {
 		echo $json;
 	}
 	function signIn($con, $id, $email, $name, $photo, $channel){
-		// DB Update
-		$sql = "INSERT INTO cafe_user (id, email, name, photo, signupChannel) VALUES ('". $id ."', '". $email ."', '". $name ."', '". $photo ."', '". $channel ."')";
+		$check = mysqli_query($con, "SELECT id, email, name, photo, bookmark, signupChannel FROM cafe_user WHERE email = '".$email."' AND isDel = FALSE");
+		if($row=mysqli_fetch_row($check)){
+			$json = json_encode(array("result"=>0, "value"=>$row[5]));
+		} else {
+			// DB Update
+			$sql = "INSERT INTO cafe_user (id, email, name, photo, signupChannel) VALUES ('". $id ."', '". $email ."', '". $name ."', '". $photo ."', '". $channel ."')";
 
-		mysqli_query($con, $sql);
-
-		$this->getUser($con, $email);
-		// if (mysqli_query($con, $sql)) {
-		// 	echo "Record updated successfully";
-		// } else {
-		// 	echo "Error updating record: " . mysqli_error($con);
-		// }
+			$json = json_encode(array("result"=>1, "bookmark"=>$row[4]));
+		}
+		echo $json;
 	}
 
 	function addBookmark($con, $no, $email){
