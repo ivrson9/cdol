@@ -83,6 +83,10 @@ class Cafe extends MY_Controller{
 
 	}
 
+	function addWait(){
+
+	}
+
 	function add(){
 		$lat = $this->input->post('latitude');
 		$lng = $this->input->post('longitude');

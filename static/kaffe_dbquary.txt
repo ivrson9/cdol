@@ -44,6 +44,18 @@ create table cafe_comment (
   isDel boolean default false
 );
 
+// Cafe Add List
+// isDone : not, error, complate
+create table cafe_add (
+  add_no int unsigned not null primary key auto_increment,
+  name varchar(100) not null,
+  latitude double,
+  longitude double,
+  wifi int unsigned default 0,
+  power int unsigned default 0,
+  isDone int unsigned default 0
+);
+
 
 SELECT *,	(6371*acos(cos(radians(52.522486))*cos(radians(latitude))*cos(radians(longitude)-radians(13.409629))+sin(radians(52.522486))*sin(radians(latitude))))
 AS distance

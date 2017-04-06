@@ -39,12 +39,19 @@ class CafeUser {
 		if ($bookmark[0] != null && $bookmark[0] != ""){
 			$bookmark_array = explode(",", $bookmark[0]);   // String to Array
 			//$bookmark_array = json_decode($bookmark[0])->result;
+			$i = 0;
 			foreach ($bookmark_array as $value){
 				if($value == $no){
+					array_splice($bookmark_array, $i);
+					$bookmark = implode(",", $bookmark_array);
+					$delSql = "UPDATE cafe_user SET bookmark = '".$bookmark."' WHERE email = '".$email."'";
+					mysqli_query($con, $delSql);
+
 					$result_json = json_encode(array("result"=>"Already"));
 					echo $result_json;
 					return ;
 				}
+				i++;
 			}
 		}
 
