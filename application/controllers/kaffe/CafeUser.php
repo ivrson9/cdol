@@ -51,7 +51,7 @@ class CafeUser {
 					echo $result_json;
 					return ;
 				}
-				i++;
+				$i++;
 			}
 		}
 
