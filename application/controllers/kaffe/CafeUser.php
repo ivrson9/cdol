@@ -28,7 +28,7 @@ class CafeUser {
 			// DB Update
 			$sql = "INSERT INTO cafe_user (id, email, name, photo, signupChannel) VALUES ('". $id ."', '". $email ."', '". $name ."', '". $photo ."', '". $channel ."')";
 
-			$json = json_encode(array("result"=>1, "bookmark"=>$row[4]));
+			$json = json_encode(array("result"=>2, "bookmark"=>$row[4]));
 		}
 		echo $json;
 	}
