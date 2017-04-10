@@ -24,12 +24,27 @@ class GetData {
 
 			$cafe = new Cafe();
 			$cafe->getList($con, $latitude, $longitude, $bookmark);
+		} else if ($function == "cafeA"){
+			$name = $_GET['name'];
+			$address = $_GET['address'];
+			$wifi = $_GET['wifi'];
+			$power = $_GET['power'];
 
-		}  else if ($function == "comL"){
+			$cafe = new Cafe();
+			$cafe->addWait($con, $name, $address, $wifi, $power);
+		} else if ($function == "comL"){
 			$no=$_GET['no'];
 
 			$comment = new Comment();
 			$comment->getList($con, $no);
+		} else if ($function == "comA"){
+			$cafe_no = $_GET['no'];
+			$id = $_GET['id'];
+			$comment = $_GET['comment'];
+			$rating = $_GET['rating'];
+
+			$comment = new Comment();
+			$comment->addComment($con, $cafe_no, $id, $comment, $rating);
 		} else if ($function == "comD"){
 			$comment_no = $_GET['commentNo'];
 

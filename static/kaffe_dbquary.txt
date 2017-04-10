@@ -28,7 +28,7 @@ create table cafe_user (
   email varchar(50) NOT NULL primary key,
   name varchar(50),
   photo varchar(100),
-  bookmark text,
+  bookmark text not null,
   signupChannel int unsigned,
   isDel boolean DEFAULT false
 );
@@ -49,8 +49,7 @@ create table cafe_comment (
 create table cafe_add (
   add_no int unsigned not null primary key auto_increment,
   name varchar(100) not null,
-  latitude double,
-  longitude double,
+  address text,
   wifi int unsigned default 0,
   power int unsigned default 0,
   isDone int unsigned default 0

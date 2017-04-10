@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Comment {
 
-	function addComment($con, $id, $comment, $cafeNo){
+	function addComment($con, $cafeNo, $id, $comment, $rating){
 		// DB Update
 		$sql = "INSERT INTO cafe_comment (id, comment, comment_date, cafe_no) VALUES ('". $id ."', '". $comment ."', NOW(),". $cafeNo .")";
 
