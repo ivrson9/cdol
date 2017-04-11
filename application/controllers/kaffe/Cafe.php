@@ -171,6 +171,8 @@ class Cafe extends MY_Controller{
 
 					// Name
 					$real_name = $detail_get->result->name;
+					$lat = $detail_get->result->geometry->location->lat;
+					$lng = $detail_get->result->geometry->location->lng;
 
 					// Make Address
 					$address_components = $detail_get->result->address_components;
