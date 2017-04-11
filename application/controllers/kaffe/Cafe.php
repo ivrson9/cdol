@@ -50,37 +50,15 @@ class Cafe extends MY_Controller{
 		$result = array();
 		while($row = mysqli_fetch_array($res)){
 			$google_id = $row[9];
-			//$open_now = $this->getOpennow($google_id);
-			$open_now = false;
 
-			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5], 'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8],
-				'open_now'=>$open_now, 'distance'=>$row[10]));
+			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5],
+				'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8], 'distance'=>$row[10]));
 		}
 
 
 		$json = json_encode(array("result"=>$result));
 		//echo stripslashes($this->unistr_to_xnstr($json));
 		echo $json;
-	}
-
-	function getOpennow($id){
-		$detail_url = "https://maps.googleapis.com/maps/api/place/details/json?";
-
-		// Detail
-		$detail_data = http_build_query(
-			array(
-				'place_id' => $id,
-				'key' => 'AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE'
-			)
-		);
-
-		$google_detail_result = file_get_contents($detail_url.$detail_data, true);
-		$detail_get = json_decode($google_detail_result);
-
-		$result = $detail_get->result->opening_hours->open_now;
-
-		return $result;
-
 	}
 
 	function addWait($con, $name, $address, $wifi, $power){
