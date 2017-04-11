@@ -13,8 +13,9 @@ class Cafe_model extends CI_Model {
     function add($option)
     {
         $this->db->set('name', $option['name']);
-        $this->db->set('latitude', (float)$option['latitude']);
-        $this->db->set('longitude', (float)$option['longitude']);
+        $this->db->set('address', $option['address']);
+        $this->db->set('latitude', (float)$option['lat']);
+        $this->db->set('longitude', (float)$option['lng']);
         $this->db->set('wifi', (int)$option['wifi']);
         $this->db->set('power', (int)$option['power']);
         $this->db->set('opening_hours', $option['opening_hours']);
@@ -46,5 +47,59 @@ class Cafe_model extends CI_Model {
         $this->db->update('user');
     }
 
+    function addWait($data){
+        $this->db->set('name', $data['name']);
+        $this->db->set('address', $data['address']);
+        $this->db->set('wifi', $data['wifi']);
+        $this->db->set('power', $data['power']);
+        $this->db->insert('cafe_add');
+        $result = $this->db->insert_id();
+        return $result;
+    }
+
+    function get_addValue($no){
+        $result = $this->db->query("SELECT add_no, name, address, wifi, power FROM cafe_add WHERE add_no = ".$no)->row();
+        //$result = $this->db->get_where($name, array('b_no'=>$b_no))->row();
+        return $result;
+    }
+    // List
+    function getAdd_list($data){
+        $select = "SELECT add_no, name, address, wifi, power, isDone FROM cafe_add ";
+
+        // 관리자 모드 체크
+        if($data['adm'] == true){
+            $query = $select." WHERE 1=1";
+        } else {
+            $query = $select." WHERE isDone not like 4";
+        }
+
+        // 페이징
+        if(!isset($data['list_num'])){
+            $query = $query." ORDER BY add_no desc LIMIT 0, 10";
+        } else {
+            $data['list_num'] = ($data['list_num']-1)* 10;
+            $query = $query." ORDER BY add_no desc LIMIT ".$data['list_num'].", 10";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    function updateAdd_list($add_no, $return){
+        $this->db->set('isDone', $return);
+        $this->db->where('add_no', $add_no);
+
+        $this->db->update('cafe_add');
+        $result = $this->db->insert_id();
+        return $result;
+    }
+    // 페이징을 위한 개수
+    function count_all($data){
+        // 관리자 모드 체크
+        if($data['adm'] == false){
+            $this->db->where('isDone', 0);
+        }
+
+        return $this->db->count_all_results($data['name']);
+    }
 }
 ?>
