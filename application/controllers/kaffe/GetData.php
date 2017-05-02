@@ -40,11 +40,11 @@ class GetData {
 		} else if ($function == "comA"){
 			$cafe_no = $_GET['no'];
 			$id = $_GET['id'];
-			$comment = $_GET['comment'];
+			$commentText = $_GET['comment'];
 			$rating = $_GET['rating'];
 
 			$comment = new Comment();
-			$comment->addComment($con, $cafe_no, $id, $comment, $rating);
+			$comment->addComment($con, $cafe_no, $id, $commentText, $rating);
 		} else if ($function == "comD"){
 			$comment_no = $_GET['commentNo'];
 

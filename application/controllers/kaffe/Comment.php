@@ -6,10 +6,35 @@ class Comment {
 
 	function addComment($con, $cafeNo, $id, $comment, $rating){
 		// DB Update
-		$sql = "INSERT INTO cafe_comment (id, comment, comment_date, cafe_no) VALUES ('". $id ."', '". $comment ."', NOW(),". $cafeNo .")";
-
+		$sql = "INSERT INTO cafe_comment (id, comment, comment_date, cafe_no, rating) VALUES ('". $id ."', '". $comment ."', NOW(),". $cafeNo .",". (float)$rating .")";
+		
 		if (mysqli_query($con, $sql)) {
-			echo "Record updated successfully";
+			$cafeGetsql = "SELECT rating FROM cafe WHERE no = ".$cafeNo ;
+
+			$row = mysqli_fetch_row(mysqli_query($con, $cafeGetsql));
+			
+			if($row[0] == 10.0){
+				$newRating = $rating;
+			} else {
+				$newRating = ($rating+$row[0])/2;
+				$newRating = round($newRating, 1);
+
+				$decimal = $newRating - round($newRating, 0);
+				
+				if($decimal > 0.5){
+					$newRating = ceil($newRating);
+				} else if($decimal < 0.5){
+					$newRating = floor($newRating);
+				}
+			}
+
+			$newRatingSetSql = "UPDATE cafe SET rating = ". $newRating ." WHERE no = ". $cafeNo;
+
+			if(mysqli_query($con, $newRatingSetSql)){
+				echo "Record updated successfully";
+			} else {
+				echo "Error updating record: " . mysqli_error($con);
+			}
 		} else {
 			echo "Error updating record: " . mysqli_error($con);
 		}
