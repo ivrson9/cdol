@@ -10,39 +10,47 @@ class Cafe extends MY_Controller{
 		$this->load->model('cafe_model');
 	}
 
-	function getList($con, $latitude, $longitude, $bookmark){
-		if( $bookmark == ""){
-			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
-					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
-					AS distance
-					FROM cafe
-					WHERE isDel = FALSE
-					ORDER BY distance
-					LIMIT 0,1000";
-			// $sql = "SELECT *,
-			// 		(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
-			// 		AS distance
-			// 		FROM cafe
-			// 		WHERE isDel = FALSE
-			// 		HAVING distance <= 20
-			// 		ORDER BY distance
-			// 		LIMIT 0,1000";
+	function getList($con, $latitude, $longitude, $bookmark, $zipcode){
+		if($zipcode == ""){
+			if( $bookmark == ""){
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+						AS distance
+						FROM cafe
+						WHERE isDel = FALSE
+						ORDER BY distance
+						LIMIT 0,1000";
+				// $sql = "SELECT *,
+				// 		(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+				// 		AS distance
+				// 		FROM cafe
+				// 		WHERE isDel = FALSE
+				// 		HAVING distance <= 20
+				// 		ORDER BY distance
+				// 		LIMIT 0,1000";
+			} else {
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
+						AS distance
+						FROM cafe
+						WHERE isDel = FALSE AND no IN (";
+
+				$b_list = explode(",", $bookmark);
+				$cnt = 0;
+				foreach ($b_list as $value){
+					if( $cnt != 0 )
+						$sql = $sql.",";
+					$sql = $sql.$value;
+					$cnt++;
+				}
+				$sql = $sql.") ORDER BY distance";
+			}
 		} else {
 			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
 					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 					AS distance
 					FROM cafe
-					WHERE isDel = FALSE AND no IN (";
-
-			$b_list = explode(",", $bookmark);
-			$cnt = 0;
-			foreach ($b_list as $value){
-				if( $cnt != 0 )
-					$sql = $sql.",";
-				$sql = $sql.$value;
-				$cnt++;
-			}
-			$sql = $sql.") ORDER BY distance";
+					WHERE zipcode = ".$zipcode;
 		}
 
 		$res = mysqli_query($con, $sql);
@@ -190,6 +198,9 @@ class Cafe extends MY_Controller{
 
 					$data = array(
 						'name'=>$real_name,
+						'country'=>$country,
+						'city'=>$city,
+						'zipcode'=>$postal_code,
 						'address'=>$full_address,
 						'lat'=>$lat,
 						'lng'=>$lng,

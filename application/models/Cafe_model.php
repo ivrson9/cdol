@@ -13,6 +13,9 @@ class Cafe_model extends CI_Model {
     function add($option)
     {
         $this->db->set('name', $option['name']);
+        $this->db->set('country', $option['country']);
+        $this->db->set('city', $option['city']);
+        $this->db->set('zipcode', $option['zipcode']);
         $this->db->set('address', $option['address']);
         $this->db->set('latitude', (float)$option['lat']);
         $this->db->set('longitude', (float)$option['lng']);

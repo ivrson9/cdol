@@ -9,6 +9,9 @@ GRANT ALL PRIVILEGES ON cdol.* to cdol@localhost;
 create table cafe (
   no int unsigned not null primary key auto_increment,
   name varchar(100) not null,
+  country varchar(100),
+  city varchar(100),
+  zipcode varchar(10),
   address text,
   latitude double,
   longitude double,
