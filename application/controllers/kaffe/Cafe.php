@@ -11,7 +11,6 @@ class Cafe extends MY_Controller{
 	}
 
 	function getList($con, $latitude, $longitude, $bookmark, $zipcode){
-		echo $zipcode;
 		if($zipcode == ""){
 			if( $bookmark == ""){
 				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
