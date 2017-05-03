@@ -51,6 +51,8 @@ class Cafe extends MY_Controller{
 					AS distance
 					FROM cafe
 					WHERE zipcode = ".$zipcode;
+
+			$zipLocation = $this->getZipLocation($zipcode);
 		}
 
 		$res = mysqli_query($con, $sql);
@@ -63,8 +65,12 @@ class Cafe extends MY_Controller{
 				'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8], 'distance'=>$row[10]));
 		}
 
-
-		$json = json_encode(array("result"=>$result));
+		$return_array = array("result"=>$result);
+		if($zipcode != ""){
+			$return_array += ["zipLocation"=>$zipLocation];
+		}
+		
+		$json = json_encode($return_array);
 		//echo stripslashes($this->unistr_to_xnstr($json));
 		echo $json;
 	}
@@ -111,6 +117,15 @@ class Cafe extends MY_Controller{
 
 
 		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
+	}
+
+	function getZipLocation($zipcode){
+		$url = "http://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+		$google_result = file_get_contents($url, true);
+		$jsonGet = json_decode($google_result);
+		$set = $jsonGet->results[0];
+
+		return $set->geometry->location;
 	}
 
 	// 장소 id(place_id) 가져온 후 opening data 가져옴
