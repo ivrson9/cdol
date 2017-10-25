@@ -75,8 +75,8 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'cdol',
+	'hostname' => '127.0.0.1',
+	'username' => 'root',
 	'password' => 'xkznal86',
 	'database' => 'cdol',
 	'dbdriver' => 'mysqli',

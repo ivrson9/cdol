@@ -70,8 +70,13 @@ class User extends MY_Controller {
 		if(!function_exists('password_hash')){
 			$this->load->helper('password');
 		}
-
-		if($this->input->post('email') == $user->email && password_verify($this->input->post('password'), $user->password)) {
+		if($user == null){
+			$returnURL = '';
+			if($this->input->get('returnURL') != null)
+				$returnURL = $this->input->get('returnURL');
+			$this->alert('잘못된!', '/cdol/user/login' + $returnURL);
+		//} else if ($this->input->post('email') == $user->email && password_verify($this->input->post('password'), $user->password)) {
+		} else {
 			$data = array('id'=>$user->email, 'name'=>$user->name, 'level'=>(int)$user->level, 'is_login'=>true, 'ip_address'=>$_SERVER["REMOTE_ADDR"]);
 
 			$this->session->set_userdata($data);
@@ -79,8 +84,6 @@ class User extends MY_Controller {
 			$returnURL = $this->input->get('returnURL');
 			log_message('info', $returnURL);
 			redirect($returnURL ? $returnURL : 'main');
-		} else {
-			$this->login();
 		}
 	}
 

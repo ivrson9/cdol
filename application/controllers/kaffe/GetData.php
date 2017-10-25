@@ -71,6 +71,32 @@ class GetData {
 
 			$user = new CafeUser();
 			$user->addBookmark($con, $no, $email);
+		} else if($function == "getJson"){
+			include_once "Tmp.php";
+			
+			$data = json_decode($set);
+
+			$return_array = array();
+			foreach ($data->cafe as $value){
+				//$value = $data->cafe[0];
+				$url = "http://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($value->address);
+
+				$google_result = file_get_contents($url, true);
+				$jsonGet = json_decode($google_result);
+				if(sizeof($jsonGet->results) == 0){
+					continue;
+				} else {
+					$set = $jsonGet->results[0];
+				}
+
+				$lat = $set->geometry->location->lat;
+				$lng = $set->geometry->location->lng;
+
+				
+				array_push($return_array, array('name'=>$value->name, 'address'=>$value->address, 'lat'=>$lat, 'lng'=>$lng));
+			}
+			$json = json_encode($return_array);
+			echo $json;
 		}
 
 		mysqli_close($con);

@@ -230,7 +230,6 @@ class Cafe extends MY_Controller{
 		} else {
 			return 1;
 		}
-
 	}
 }
 ?>

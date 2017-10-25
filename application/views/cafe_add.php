@@ -1,6 +1,6 @@
 
 	<!-- Custom styles for this template -->
-	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+	<div class="col-sm-offset-3 col-md-offset-2 main">
 		<form action="/cdol/kaffe/cafe/addWait_onWeb" method="POST" enctype="multipart/form-data">
 			<label for="inputEmail" class="sr-only">Address</label>
 			<input type="text" id="address" name="address" class="form-control" placeholder="Address" required autofocus>
@@ -17,7 +17,13 @@
 			<button class="btn btn-primary" type="submit">Find</button>
 		</form>
 	</div>
-
+	<div class="col-sm-offset-3 col-md-offset-2 main">
+		<p> Excel -> Google(Find Location) -> Json </p>
+		<form action="/cdol/kaffe/cafe/convertExcel" method="POST" enctype="multipart/form-data">	
+			<input type="file" name="cafe_excel">
+			<input type="submit" value="파일 전송" />
+		</form>
+	</div>
 	<div class="col-sm-offset-3 col-md-offset-2 main">
 		<script>
 			window.onload = function() {

@@ -5,7 +5,7 @@ GRANT ALL PRIVILEGES ON cdol.* to cdol@localhost;
 
 // List Table (Rating default 10)
 // wifi : none, restricted, not free, free
-// power : none, a few, many
+// power : none, a few, several
 create table cafe (
   no int unsigned not null primary key auto_increment,
   name varchar(100) not null,

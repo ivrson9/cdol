@@ -59,7 +59,7 @@ class Board extends MY_Controller {
 
 	function write(){
 		if(!$this->session->userdata('id')){
-			$this->alert('로그인 후', '/cdol/auth/login?returnURL='.rawurlencode(site_url('board/write/'.$this->uri->segment(3))));
+			$this->alert('로그인 후', '/cdol/user/login?returnURL='.rawurlencode(site_url('board/write/'.$this->uri->segment(3))));
 		}
 
 		$this->load->view('board_write', array('name'=>$this->uri->segment(3)));

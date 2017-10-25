@@ -160,6 +160,7 @@ class CI_Log {
 	 */
 	public function write_log($level, $msg)
 	{
+		date_default_timezone_set('Europe/Berlin');
 		if ($this->_enabled === FALSE)
 		{
 			return FALSE;
