@@ -70,11 +70,13 @@ class User extends MY_Controller {
 		if(!function_exists('password_hash')){
 			$this->load->helper('password');
 		}
+
 		if($user == null || !password_verify($this->input->post('password'), $user->password)){
 			$returnURL = '';
 			if($this->input->get('returnURL') != null)
 				$returnURL = $this->input->get('returnURL');
-			$result = array('login'=>false, 'redirect'=>'');
+			$result = array('login'=>false, 'redirect'=>$returnURL);
+			echo json_encode($result);
 			//$this->alert('잘못된!', '/cdol/user/login' + $returnURL);
 		//} else if ($this->input->post('email') == $user->email && password_verify($this->input->post('password'), $user->password)) {
 		} else {
