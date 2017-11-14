@@ -39,22 +39,22 @@ class Board extends MY_Controller {
 	}
 
 	function view(){
-	    	$list_num = $this->input->get('cnt');
-	    	if(empty($list_num)){
-	    		$list_num = 1;
-	    	}
+		$list_num = $this->input->get('cnt');
+		if(empty($list_num)){
+			$list_num = 1;
+		}
 
-	    	$name = $this->uri->segment(3);
-	    	$b_no = $this->input->get('b_no');
+		$name = $this->uri->segment(3);
+		$b_no = $this->input->get('b_no');
 
-	    	$view = $this->board_model->get_view($name, $b_no);
-	    	$comm_view = $this->board_model->gets_comment($name, $b_no);
-	    	$file_view = $this->board_model->gets_file($name, $b_no);
+		$view = $this->board_model->get_view($name, $b_no);
+		$comm_view = $this->board_model->gets_comment($name, $b_no);
+		$file_view = $this->board_model->gets_file($name, $b_no);
 
-	    	$this->board_model->board_hit($name, $b_no);
+		$this->board_model->board_hit($name, $b_no);
 
-	    	$this->load->view('board_view', array('view'=>$view, 'name'=>$name, 'list_num'=>$list_num, 'comm_view'=>$comm_view, 'file_view'=>$file_view));
-	    	$this->lists();
+		$this->load->view('board_view', array('view'=>$view, 'name'=>$name, 'list_num'=>$list_num, 'comm_view'=>$comm_view, 'file_view'=>$file_view));
+		$this->lists();
 	}
 
 	function write(){
@@ -67,7 +67,6 @@ class Board extends MY_Controller {
 	}
 
 	function write_board(){
-		$this->load->library('common');
 		$data = array(
 			'm_name'=>$this->uri->segment(3),
 			'title'=>$this->input->post('b_title'),
@@ -78,30 +77,13 @@ class Board extends MY_Controller {
 
 		$b_no = $this->board_model->write_board($data);
 
-		try {
-			// get params.. from post()
-			$row = $this->input->post();
-			// 업로드에 실패하면??
-			$files = $this->common->multiple_upload('', $data['m_name'], $b_no);
-			// if(!$files) {
-			// 	echo 'Something went wrong during upload';
-			// } else { // 업로드 성공시!!
-			// 	echo 'Upload success !';
-			// 	echo '<pre>';
-			// 	print_r($files[0]['file_name']);
-			// 	echo '</pre>';
-			// }
-		}catch(Exception $e) {
-			echo $e->getMessage();
-		}
-
 		echo "<script>location.replace('/cdol/board/view/".$data['m_name']."?cnt=1&b_no=".$b_no."')</script>";
 	}
 
 	function modify(){
-		$view = $this->board_model->get_view($this->uri->segment(3), $this->uri->segment(5));
-		$list_num = $this->uri->segment(4);
-		$file_view = $this->board_model->gets_file($this->uri->segment(3), $this->uri->segment(5));
+		$view = $this->board_model->get_view($this->uri->segment(3), $this->input->post('b_no'));
+		$list_num = $this->input->post('cnt');
+		$file_view = $this->board_model->gets_file($this->uri->segment(3), $this->input->post('b_no'));
 
 		$this->load->view('board_mod', array('name'=>$this->uri->segment(3), 'view'=>$view, 'list_num'=>$list_num, 'file_view'=>$file_view));
 
@@ -151,7 +133,7 @@ class Board extends MY_Controller {
 
 		$result = $this->board_model->del_board($data);
 
-		echo "<script>location.replace('/cdol/board/lists/".$data['m_name']."/1/')</script>";
+		echo "<script>location.replace('/cdol/board/lists/".$data['m_name']."')</script>";
 	}
 
 	function comment(){
@@ -168,6 +150,41 @@ class Board extends MY_Controller {
 		$idx = $this->input->post('comment_no');
 		$this->board_model->comment_del($idx);
 	}
+
+	function fileUpload(){
+		$this->load->library('common');
+		$boardName = $this->uri->segment(3);
+		if($this->uri->segment(2) == 'write'){
+			$result = $this->board_model->get_bno($this->uri->segment(3));
+			$b_no = $result->b_no + 1;
+		} else if($this->uri->segment(2) == 'modify') {
+			$this->input->post('b_no');
+		}
+
+		try {
+			// get params.. from post()
+			$row = $this->input->post();
+			// 업로드에 실패하면??
+			$file_data = $this->common->multiple_upload('', $boardName, $b_no);
+			// if(!$files) {
+			// 	echo 'Something went wrong during upload';
+			// } else { // 업로드 성공시!!
+			// 	echo 'Upload success !';
+			// 	echo '<pre>';
+			// 	print_r($files[0]['file_name']);
+			// 	echo '</pre>';
+			// }
+
+			for($i=0; $i<count($file_data); $i++){
+				$this->board_model->file_upload($file_data[$i]);
+				// log_message('debug', $file_data[$i]['b_no']);
+			}
+			$result = array('fileList'=>$file_data);
+		}catch(Exception $e) {
+			echo $e->getMessage();
+		}
+	}
+
 	function download(){
 		$this->load->helper('download');
 		$file_view = $this->board_model->get_file($this->input->post('file_no'));

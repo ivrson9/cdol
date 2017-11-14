@@ -1,6 +1,26 @@
 			<script type="text/javascript">
-				//<![CDATA[
+				function boardModify(){
+					var form = document.createElement("form");
+					form.setAttribute("charset", "UTF-8");
+					form.setAttribute("method", "Post");
+					form.setAttribute("action", "/cdol/board/modify/<?=$name?>");
 
+					hiddenField = document.createElement("input");
+					hiddenField.setAttribute("type", "hidden");
+					hiddenField.setAttribute("name", "cnt");
+					hiddenField.setAttribute("value", "<?=$list_num?>");
+					form.appendChild(hiddenField);
+
+					hiddenField = document.createElement("input");
+					hiddenField.setAttribute("type", "hidden");
+					hiddenField.setAttribute("name", "b_no");
+					hiddenField.setAttribute("value", "<?=$view->b_no?>");
+					form.appendChild(hiddenField);
+
+					document.body.appendChild(form);
+					form.submit();
+				}
+				//<![CDATA[
 				$(document).ready(function() {
 					$("#comment_form").click(function() {
 						var id = '<?=$this->session->userdata('id')?>';
@@ -146,7 +166,7 @@
 <?php
 if($this->session->userdata('id') == $view->id) {
 ?>
-						<a href="/cdol/board/modify/<?=$name?>/<?=$list_num?>/<?=$view->b_no?>" class="btn btn-primary btn-sm">수정하기</a>
+						<a href="javascript:boardModify()" class="btn btn-primary btn-sm">수정하기</a>
 						<a href="/cdol/board/del/<?=$name?>/<?=$view->b_no?>" id="delete" class="btn btn-danger btn-sm">삭제하기</a>
 <?php
 }

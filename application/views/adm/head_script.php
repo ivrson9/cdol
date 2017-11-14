@@ -1,4 +1,4 @@
-<script language="javascript">
+<script type="text/javascript">
 	function form_post(type, table, id, service){
 		var form = document.getElementById('m_frm');
 

@@ -14,11 +14,12 @@
 				var type = '<?=$search_type?>';
 				if(type != ''){
 					for(var i=0 ; i < 3; i++){
-	                    if(document.getElementById("search_type").options[i].value == type){
-	                        document.getElementById("search_type").options[i].selected = true;
-	                    }
-	                }
+						if(document.getElementById("search_type").options[i].value == type){
+							document.getElementById("search_type").options[i].selected = true;
+						}
+					}
 				}
+				document.getElementById(num).setAttribute('class', 'active');
 			}
 
 			function list_view(list_num){
@@ -96,13 +97,13 @@ if($search_cont != ''){
 					<a id="prev_link" href="<?=$uri?>?cnt=<?=$list_num-1?><?=$addUri?>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
 				</li>
 <?php
-	for($cnt = (int)($list_num/(5+1))*5 + 1 ; $cnt <= $page_cnt ; $cnt++ ){
+	for($cnt = ((int)(($list_num-1)/5))*5 + 1 ; $cnt <= $page_cnt ; $cnt++ ){
 ?>
-				<li>
+				<li id="<?=$cnt?>">
 					<a href="<?=$uri?>?cnt=<?=$cnt?><?=$addUri?>"><?=$cnt?></a>
 				</li>
 <?php
-		if($cnt == 5) {
+		if($cnt%5 == 0) {
 			break;
 		}
 	}

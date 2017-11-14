@@ -24,18 +24,18 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="table-responsive">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Name</th>
-								<th>Url</th>
-								<th>Menu Count</th>
-								<th>Del</th>
-							</tr>
-						</thead>
-						<tbody>
-							<form method="POST" id="m_frm" name="m_frm">
+					<form method="POST" id="m_frm" name="m_frm">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Name</th>
+									<th>Url</th>
+									<th>Menu Count</th>
+									<th>Del</th>
+								</tr>
+							</thead>
+							<tbody>
 								<input type="hidden" name="id" id="id"/>
 								<?php
 								foreach($service as $entry){
@@ -54,9 +54,9 @@
 									<?php
 								}
 								?>
-							</form>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</form>
 				</div>
 			</div>
 		</div>

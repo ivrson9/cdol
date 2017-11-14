@@ -31,14 +31,14 @@
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+	<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
 </head>
 <body>
-    	<script language="javascript">
+    	<script type="text/javascript">
 		// 쪽지 창
 		function win_memo(url){
 			if (!url)
@@ -175,78 +175,6 @@
 						</li>
 						<li id="users">
 							<a href="/cdol/adm/users"><i class="fa fa-fw fa-user"></i> Users</a>
-						</li>
-						<li>
-							<a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-						</li>
-						<li>
-							<a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a href="panels-wells.html">Panels and Wells</a>
-								</li>
-								<li>
-									<a href="buttons.html">Buttons</a>
-								</li>
-								<li>
-									<a href="notifications.html">Notifications</a>
-								</li>
-								<li>
-									<a href="typography.html">Typography</a>
-								</li>
-								<li>
-									<a href="icons.html"> Icons</a>
-								</li>
-								<li>
-									<a href="grid.html">Grid</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a href="#">Second Level Item</a>
-								</li>
-								<li>
-									<a href="#">Second Level Item</a>
-								</li>
-								<li>
-									<a href="#">Third Level <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-										<li>
-											<a href="#">Third Level Item</a>
-										</li>
-										<li>
-											<a href="#">Third Level Item</a>
-										</li>
-										<li>
-											<a href="#">Third Level Item</a>
-										</li>
-										<li>
-											<a href="#">Third Level Item</a>
-										</li>
-									</ul>
-									<!-- /.nav-third-level -->
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
-						</li>
-						<li>
-							<a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li>
-									<a href="blank.html">Blank Page</a>
-								</li>
-								<li>
-									<a href="login.html">Login Page</a>
-								</li>
-							</ul>
-							<!-- /.nav-second-level -->
 						</li>
 					</ul>
 				</div>

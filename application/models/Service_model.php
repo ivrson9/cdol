@@ -28,6 +28,13 @@ class Service_model extends CI_Model {
 			}
 		}
 	}
+	// Admin
+	function get_board(){
+		$this->db->select('m_id');
+		$this->db->where('isDel', false);
+		$this->db->where('m_type', 'b');
+		return $this->db->get('menu')->result();
+	}
 
 	function add_service($id, $title){
 		$this->db->set('s_id', $id);
@@ -68,7 +75,7 @@ class Service_model extends CI_Model {
 			b_hit int unsigned not null default 0,
 			id varchar(20) not null,
 			ip_address varchar(45) NOT NULL,
-			b_password varchar(100) not null,
+			b_password varchar(100) not null default '1234',
 			isDel boolean default false)");
 	}
 

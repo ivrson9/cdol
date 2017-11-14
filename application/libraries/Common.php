@@ -5,9 +5,10 @@ class Common{
 		$CI->load->library('upload');
 		$_files = $_FILES;
 		$files = array();
+		$db_data = array();
 		$cpt = count($_FILES['board_file']['name']);
 		$errors = FALSE;
-		//log_message('debug',$_files['board_file']['name'][0]);
+		log_message('debug',$_files['board_file']['name'][0]);
 		if($_files['board_file']['name'][0] != ''){
 			for($i=0; $i<$cpt; $i++){
 				$_FILES['board_file']['name']= $_files['board_file']['name'][$i];
@@ -16,7 +17,7 @@ class Common{
 				$_FILES['board_file']['error']= $_files['board_file']['error'][$i];
 				$_FILES['board_file']['size']= $_files['board_file']['size'][$i];
 
-				$CI->upload->initialize($this->set_upload_options($m_name, $b_no));
+				$CI->upload->initialize($this->set_upload_options($m_name));
 
 				if ( ! $CI->upload->do_upload('board_file')){
 					$data['error'] = $CI->upload->display_errors(); // ERR_OPEN and ERR_CLOSE are error delimiters defined in a config file
@@ -28,13 +29,14 @@ class Common{
 				} else {
 					$files[$i] = $CI->upload->data();
 
-					$db_data = array(
+					$data = array(
 						'b_no' => $b_no,
 						'b_title' => $m_name,
 						'save_name' => $files[$i]['file_name'],
 						'original_name' => $_FILES['board_file']['name']
 					);
-					$CI->board_model->file_upload($db_data);
+					array_push($db_data, $data);
+					// $CI->board_model->file_upload($db_data);
 				}
 			}
 		//log_message('debug',$config['file_name']);
@@ -50,30 +52,31 @@ class Common{
 			$data['upload_message'] = $CI->lang->line('upload_no_file_selected');
 			$CI->load->vars($data);
 		} else {
-			return $files;
+			return $db_data;
 		}
 	}
-	private function set_upload_options($m_name, $b_no){
+	private function set_upload_options($m_name){
 		//upload an image options
 		$config = array();
 		//log_message('debug','');
-		if(!is_dir("/Users/cdol/Sites/cdol/uploads/".$m_name)){
-			@mkdir("/Users/cdol/Sites/cdol/uploads/".$m_name, 0777);
+		if(!is_dir("./uploads/".$m_name)){
+			mkdir("./uploads/$m_name", 0777);
 		}
 		// file upload config
-		$config['upload_path']   = '/Users/cdol/Sites/cdol/uploads/'.$m_name;
+		$current = $this->current_millis();
+		$config['upload_path']   = './uploads/'.$m_name;
 		$config['allowed_types'] = 'txt|gif|jpg|jpeg|jpe|png';
 		$config['max_size']      = '2048';
-		$config['file_name']	 = $b_no."_".date("YmdHis");
+		$config['file_name']	 = $current.strval(mt_rand(0, 9999999));
 		$config['overwrite']     = FALSE;
-
+		//date("YmdHis")
 		return $config;
 	}
 
 	function upload_receive_from_ck(){
 		$CI =& get_instance();
 		// 사용자가 업로드 한 파일을 /static/user/ 디렉토리에 저장한다.
-		$config['upload_path'] = '/Users/cdol/Sites/cdol/imgUploads';
+		$config['upload_path'] = './imgUploads';
 		// git,jpg,png 파일만 업로드를 허용한다.
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		// 허용되는 파일의 최대 사이즈
@@ -97,6 +100,11 @@ class Common{
 
 			echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction('".$CKEditorFuncNum."', '".$url."', '전송에 성공 했습니다')</script>";
 		}
+	}
+
+	function current_millis() {
+		list($usec, $sec) = explode(" ", microtime());
+		return round(((float)$usec + (float)$sec) * 1000);
 	}
 }
 
