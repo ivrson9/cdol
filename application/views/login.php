@@ -14,9 +14,10 @@
 					success: function (result) {
 						$('#myModal').addClass("in");
 						if(result.login){
-							$('#myModal').find('#modalMessage').html("qwe");
+							$('#myModal').find('#modalMessage').html(result.redirect);
 							$('#myModal').on('hide.bs.modal', function(e){
-								window.location.href = result.redirect;
+								// 이전페이지로
+								window.location.href = '';
 							});
 						} else {
 							$('#myModal').find('#modalMessage').html("asd");
@@ -47,7 +48,7 @@
 
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" value="remember-me"> Remember me
+					<input type="checkbox" value="remember-me" id="remember" name="remember"> Remember me
 				</label>
 			</div>
 			<input class="btn btn-lg btn-primary btn-block" type="submit" data-toggle="modal" data-target="#myModal" value="Sign in"/>
@@ -70,9 +71,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="debug">
-
 		</div>
 
 	</div> <!-- /container -->

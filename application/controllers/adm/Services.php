@@ -5,7 +5,7 @@ class Services extends ADM_Controller {
 		parent::__construct();
 		$this->load->helper('file');
 		if($this->session->userdata('level') < 4){
-			$this->alert('등급x', '/cdol/auth/login?returnURL='.rawurlencode(site_url('adm/services')));
+			$this->alert('등급x', '/cdol/user/login?returnURL='.rawurlencode(site_url('adm/services')));
 		}
 		$this->load->view('adm/head_script');
 	}

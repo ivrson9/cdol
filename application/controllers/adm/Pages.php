@@ -5,7 +5,7 @@ class Pages extends ADM_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('level') < 4){
-			$this->alert('등급x', '/cdol/auth/login?returnURL='.rawurlencode(site_url('adm/pages/')));
+			$this->alert('등급x', '/cdol/user/login?returnURL='.rawurlencode(site_url('adm/pages/')));
 		}
 	}
 

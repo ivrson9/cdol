@@ -5,7 +5,7 @@ class Users extends ADM_Controller {
 		parent::__construct();
 		$this->load->model('user_model');
 		if($this->session->userdata('level') < 4){
-			$this->alert('등급x', '/cdol/auth/login?returnURL='.rawurlencode(site_url('adm/users/')));
+			$this->alert('등급x', '/cdol/user/login?returnURL='.rawurlencode(site_url('adm/users/')));
 		}
 		$this->load->view('adm/head_script');
 	}
@@ -32,11 +32,13 @@ class Users extends ADM_Controller {
 	}
 
 	function mod_user(){
-		$email = $this->input->post('email');
-		$name = $this->input->post('name');
-		$level = $this->input->post('level');
+		$data = array(
+			'email' => $this->input->post('email'),
+			'name' => $this->input->post('name'),
+			'level' => $this->input->post('level')
+		);
 
-		$this->user_model->mod_user($email, $name, $level);
+		$this->user_model->mod_user($data);
 
 		echo "<script>location.replace('/cdol/adm/users')</script>";
 	}

@@ -48,13 +48,14 @@ class ADM_Controller extends Tmp_Controller {
 	}
 
 }
+
 class Tmp_Controller extends CI_Controller{
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper('url');
 	}
-     // 경고메세지를 경고창으로
+	// 경고메세지를 경고창으로
 	function alert($msg='', $url='') {
 		$CI =& get_instance();
 
@@ -64,14 +65,14 @@ class Tmp_Controller extends CI_Controller{
 		echo "<script type='text/javascript'>alert('".$msg."');";
 		if ($url)
 			echo "location.replace('".$url."');";
-        	//redirect($url);
+			//redirect($url);
 		else
 			echo "history.go(-1);";
 		echo "</script>";
 		exit;
 	}
 
-    // 경고메세지 출력후 창을 닫음
+	// 경고메세지 출력후 창을 닫음
 	function alert_close($msg) {
 		$CI =& get_instance();
 
@@ -80,7 +81,7 @@ class Tmp_Controller extends CI_Controller{
 		exit;
 	}
 
-    // 경고메세지만 출력
+	// 경고메세지만 출력
 	function alert_only($msg) {
 		$CI =& get_instance();
 

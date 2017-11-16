@@ -16,13 +16,13 @@ class Board extends MY_Controller {
 		}
 
 		$data = array(
-		        	'list_num'=>$list_num,
-		        	'today'=>mdate("%Y/%m/%d", time()),
-		        	'name'=>$this->uri->segment(3),
-		        	'adm'=>false,
-		        	'type'=>$this->input->get('search_type'),
-		        	'search'=>$this->input->get('search_cont')
-	        	);
+					'list_num'=>$list_num,
+					'today'=>mdate("%Y/%m/%d", time()),
+					'name'=>$this->uri->segment(3),
+					'adm'=>false,
+					'type'=>$this->input->get('search_type'),
+					'search'=>$this->input->get('search_cont')
+				);
 
 		$count = $this->board_model->count_all($data);              // 열 수
 		if($count % 10 == 0){

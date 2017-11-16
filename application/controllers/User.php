@@ -82,11 +82,17 @@ class User extends MY_Controller {
 		} else {
 			$data = array('id'=>$user->email, 'name'=>$user->name, 'level'=>(int)$user->level, 'is_login'=>true, 'ip_address'=>$_SERVER["REMOTE_ADDR"]);
 
+			// session Config
+			if ($this->input->post('remember') == ""){
+				log_message('debug', "??");
+				$this->session->sess_expiration = 0;
+			}
+
+			// session Set
 			$this->session->set_userdata($data);
 
-			$returnURL = $this->input->get('returnURL');
-			log_message('info', $returnURL);
-			$result = array('login'=>true, 'redirect'=>$this->input->post('returnURL'));
+			$returnURL = $this->input->post('returnURL');
+			$result = array('login'=>true, 'redirect'=>$returnURL);
 			//redirect($returnURL ? $returnURL : 'main');
 			echo json_encode($result);
 		}
@@ -106,11 +112,23 @@ class User extends MY_Controller {
 		if(!function_exists('password_hash')){
 			$this->load->helper('password');
 		}
-		$data = array('id'=>$user->email, 'name'=>$user->name);
+		log_message('debug', $user->email);
+		$data = array('email'=>$user->email, 'name'=>$user->name);
 
 		$this->load->view('profile', array('data'=>$data));
 
 		$this->_footer();
+	}
+
+	function modify(){
+		$data = array(
+			'email' => $this->input->post('email'),
+			'name' => $this->input->post('nickname'),
+			'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT)
+		);
+
+		$this->user_model->mod_user($data);
+		redirect('/main');
 	}
 
 	function set_validation($vaildation){

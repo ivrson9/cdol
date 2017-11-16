@@ -6,7 +6,7 @@ class Boards extends ADM_Controller {
 		$this->load->helper('file');
 		$this->load->model('board_model');
 		if($this->session->userdata('level') < 4){
-			$this->alert('등급x', '/cdol/auth/login?returnURL='.rawurlencode(site_url('adm/boards/')));
+			$this->alert('등급x', '/cdol/user/login?returnURL='.site_url('adm/boards/'));
 		}
 	}
 

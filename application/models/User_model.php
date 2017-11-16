@@ -19,6 +19,7 @@ class User_model extends CI_Model {
 	{
 		$this->db->set('email', $option['email']);
 		$this->db->set('password', $option['password']);
+		$this->db->set('name', $option['name']);
 		$this->db->set('created', 'NOW()', false);
 		$this->db->insert('user');
 		$result = $this->db->insert_id();
@@ -32,12 +33,8 @@ class User_model extends CI_Model {
 		return $result;
 	}
 
-	function mod_user($email, $name, $level){
-		$data = array(
-			'name' => $name,
-			'level' => $level
-			);
-		$this->db->where('email', $email);
+	function mod_user($data){
+		$this->db->where('email', $data['email']);
 		$result = $this->db->update('user', $data);
 	}
 
