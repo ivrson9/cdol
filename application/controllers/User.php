@@ -131,6 +131,51 @@ class User extends MY_Controller {
 		redirect('/main');
 	}
 
+	function loginHelp(){
+		$this->_head();
+		$this->load->view('user_find');
+		$this->_footer();
+	}
+
+	function findByEmail(){
+		$emailTo = $this->input->post('email');
+		$result = $this->user_model->getByEmail(array('email'=>$emailTo));
+
+		if(1){
+			// 설정
+			$config['useragent'] = 'your name';
+			$config['protocol'] = 'smtp';
+			//$config['mailpath'] = '/usr/sbin/sendmail';
+			$config['smtp_host'] = 'smtp.gmail.com';
+			$config['smtp_port'] = 587; //465
+			$config['smtp_crypto']="tls"; //ssl
+			$config['smtp_user'] = "ivrson9@gmail.com";
+			$config['smtp_pass'] = "xkznal86";
+			$config['smtp_timeout'] = 10;
+			$config['mailtype'] = 'html';
+			$config['charset'] = 'utf-8';
+			$config['crlf'] = "\r\n";
+			$config['newline'] = "\r\n";
+			$config['bcc_batch_mode'] = FALSE;
+			$config['bcc_batch_size'] = 200;
+
+			$this->load->library('email', $config);
+
+			$this->email->set_newline("\r\n");
+			$this->email->clear();
+			$this->email->from("ivrson9@gmail.com", "관리자");
+			$this->email->to($emailTo);
+			$this->email->subject("제목");
+			$this->email->message("내용");
+			if (!$this->email->send())
+				$result = array('send'=>false);
+			else
+				$result = array('send'=>true);
+
+			echo json_encode($result);
+		}
+	}
+
 	function set_validation($vaildation){
 		$vaildation->set_rules('email', '이메일', 'required|valid_email|is_unique[user.email]');
 		$vaildation->set_rules('nickname', '이름', 'required|min_length[5]|max_length[20]');
