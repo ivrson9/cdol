@@ -1,16 +1,16 @@
 	<script>
 		window.onload = function() {
 			var id = '<?=$board_id?>';
-                // board 종류 select
-                for(var i=0 ; i < <?=count($list)?> ; i++){
-	                	if(id == '')
-	                		document.getElementById("board_select").options[0].selected = true;
-	                	if(document.getElementById("board_select").options[i].value == id)
-	                		document.getElementById("board_select").options[i].selected = true;
-                }
+				// board 종류 select
+				for(var i=0 ; i < <?=count($list)?> ; i++){
+					if(id == '')
+						document.getElementById("board_select").options[0].selected = true;
+					if(document.getElementById("board_select").options[i].value == id)
+						document.getElementById("board_select").options[i].selected = true;
+				}
 
-                // pagination
-                var num = <?=$list_num?>;
+				// pagination
+				var num = <?=$list_num?>;
 			if(num == 1){
 				document.getElementById("prev").setAttribute('class', 'disabled');
 				document.getElementById("prev_link").setAttribute('href', '');
@@ -20,15 +20,16 @@
 				document.getElementById("next_link").setAttribute('href', '');
 			}
 
-                // search
-                var type = '<?=$search_type?>';
+			// search
+			var type = '<?=$search_type?>';
 			if(type != ''){
 				for(var i=0 ; i < 3; i++){
 					if(document.getElementById("search_type").options[i].value == type){
 						document.getElementById("search_type").options[i].selected = true;
 					}
 				}
-                }
+			}
+			document.getElementById(num).setAttribute('class', 'active');
 		}
 
 		// board 변경
@@ -41,7 +42,7 @@
 			form.submit();
 		}
 
-            // 전체선택
+		// 전체선택
 		function checkbox_select(){
 			var chk_all = document.getElementById("chk_all");
 			var chk = document.getElementsByName("chk");
@@ -209,13 +210,13 @@
 					<a id="prev_link" href="<?=$uri?>?b_name=<?=$board_id?>&cnt=<?=$list_num-1?><?=$addUri?>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
 				</li>
 				<?php
-				for($cnt = (int)($list_num/(5+1))*5 + 1 ; $cnt <= $page_cnt ; $cnt++ ){
+				for($cnt = ((int)(($list_num-1)/5))*5 + 1 ; $cnt <= $page_cnt ; $cnt++ ){
 					?>
-					<li>
+					<li id="<?=$cnt?>">
 						<a href='<?=$uri?>?b_name=<?=$board_id?>&cnt=<?=$cnt?><?=$addUri?>'><?=$cnt?></a>
 					</li>
 					<?php
-					if($cnt == 5) {
+					if($cnt%5 == 0) {
 						break;
 					}
 				}

@@ -38,7 +38,7 @@
 
 </head>
 <body>
-    	<script type="text/javascript">
+	<script type="text/javascript">
 		// 쪽지 창
 		function win_memo(url){
 			if (!url)
@@ -72,15 +72,15 @@
 
 			$("#<?=$this->uri->segment(2)?>").addClass("active");
 		}
-	    	// function head_onload(){
-	    	// 	var tmp = '<?=$this->uri->segment(2)?>';
-	    	// 	if(tmp == 'services' || tmp == 'menus' || tmp == 'boards' || tmp == 'pages'){
-	    	// 		document.getElementById('management').className="collaps in";
-	    	// 	}
-	    	// 	document.getElementById('<?=$this->uri->segment(2)?>').className="active";
-	    	// }
+		// function head_onload(){
+		// 	var tmp = '<?=$this->uri->segment(2)?>';
+		// 	if(tmp == 'services' || tmp == 'menus' || tmp == 'boards' || tmp == 'pages'){
+		// 		document.getElementById('management').className="collaps in";
+		// 	}
+		// 	document.getElementById('<?=$this->uri->segment(2)?>').className="active";
+		// }
 
-	    	// addLoadEvent(head_onload);
+		// addLoadEvent(head_onload);
 		// $(document).ready(function() {
 		//     $("a.dropdown-toggle").dropdown("toggle");
 		// });Event(head_onload);

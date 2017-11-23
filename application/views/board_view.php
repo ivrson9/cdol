@@ -121,7 +121,7 @@
 				<table class="table">
 					<tr>
 						<td width="70" align="right"><strong>아이디 : </strong></td>
-						<td><?=$view->name?> (<?=$view->id?>)</td>
+						<td><?=$view->name?> (<?=$view->write_id?>)</td>
 					</tr>
 					<tr>
 						<td align="right"><strong>날짜 : </strong></td>
@@ -164,7 +164,7 @@
 				<div class="col-sm-9 col-md-10 col-md-offset-2 main">
 					<div class="col-xs-8 col-sm-6">
 <?php
-if($this->session->userdata('id') == $view->id) {
+if($this->session->userdata('id') == $view->write_id) {
 ?>
 						<a href="javascript:boardModify()" class="btn btn-primary btn-sm">수정하기</a>
 						<a href="/cdol/board/del/<?=$name?>/<?=$view->b_no?>" id="delete" class="btn btn-danger btn-sm">삭제하기</a>

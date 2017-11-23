@@ -106,7 +106,7 @@
 									}
 								});
 							} else {
-								$('#modifyForm').attr('action','/cdol/board/write_board/<?=$name?>').submit();
+								$('#modifyForm').attr('action','/cdol/board/modify_board/<?=$name?>').submit();
 							}
 						});
 					});

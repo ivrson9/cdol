@@ -31,22 +31,26 @@ CREATE TABLE `user` (
 // 메뉴 테이블 생성
 create table service (
   s_no int unsigned not null primary key auto_increment,
+  s_id varchar(100) not null,
   s_title varchar(100) not null,
   s_content text not null,
   s_url varchar(100) not null,
   s_date datetime not null,
+  m_cnt int unsigned not null default 0,
   isDel boolean default false
 );
-INSERT INTO `service`(`s_title`, `s_content`, `s_date`) VALUES ('Home','home', CURRENT_TIMESTAMP)
+INSERT INTO `service`(`s_id`, `s_title`, `s_content`, `s_date`) VALUES ('Home', 'Home','home', CURRENT_TIMESTAMP)
 
 // 2단 메뉴 테이블 생성
 create table menu (
   m_no int unsigned not null primary key auto_increment,
   s_no int unsigned not null,
+  m_id varchar(100) not null,
   m_title varchar(100) not null,
   m_content text not null,
   m_url varchar(100) not null,
   m_date datetime not null,
+  m_type varcha(1) not null,
   isDel boolean default false
 );
 INSERT INTO `menu`(`m_title`, `m_content`, `s_no`,`m_date`) VALUES ('Board','board', 1, CURRENT_TIMESTAMP);

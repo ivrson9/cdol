@@ -30,9 +30,9 @@ class Board_model extends CI_Model {
 
 	// List
 	function gets_list($data){
-		$select = "SELECT b_no, b_title, DATE_FORMAT(b_date, '%Y/%m/%d') b_date, b_hit, id, b_password, ip_address, name, b.isDel,
-									(SELECT count(*) AS cnt FROM comment c WHERE c.m_name = '".$data['name']."' AND c.b_no = b.b_no) AS com_cnt
-								FROM ".$data['name']." b LEFT JOIN user u ON b.id=u.email";
+		$select = "SELECT b_no, b_title, DATE_FORMAT(b_date, '%Y/%m/%d') b_date, b_hit, b.write_id id, b_password, ip_address, name, b.isDel,
+									(SELECT count(*) AS cnt FROM comment c WHERE c.m_name = '".$data['name']."' AND c.b_no = b.b_no AND c.isDel = FALSE) AS com_cnt
+								FROM ".$data['name']." b LEFT JOIN user u ON b.write_id=u.email";
 		// 관리자 모드 체크
 		if($data['adm'] == true){
 			$query = $select." WHERE 1=1";
@@ -64,9 +64,9 @@ class Board_model extends CI_Model {
 
 		return $this->db->query($query)->result();
 	}
-// View
+	// View
 	function get_view($name, $b_no){
-		$result = $this->db->query("SELECT * FROM ".$name." b LEFT JOIN user u ON b.id=u.email WHERE b.b_no =".$b_no."")->row();
+		$result = $this->db->query("SELECT * FROM ".$name." b LEFT JOIN user u ON b.write_id=u.email WHERE b.b_no =".$b_no."")->row();
 		//$result = $this->db->get_where($name, array('b_no'=>$b_no))->row();
 		return $result;
     }
@@ -84,7 +84,7 @@ class Board_model extends CI_Model {
 		$this->db->set('b_title', $data['title']);
 		$this->db->set('b_content', $data['content']);
 		$this->db->set('b_date', 'NOW()', false);
-		$this->db->set('id', $data['id']);
+		$this->db->set('write_id', $data['write_id']);
 		$this->db->set('ip_address', $data['ip']);
 
 		$this->db->insert($data['m_name']);
@@ -96,7 +96,7 @@ class Board_model extends CI_Model {
 		$this->db->set('b_title', $data['title']);
 		$this->db->set('b_content', $data['content']);
 		$this->db->set('b_date', 'NOW()', false);
-		$this->db->set('id', $data['id']);
+		$this->db->set('write_id', $data['write_id']);
 		$this->db->set('ip_address', $data['ip']);
 		$this->db->where('b_no', $data['b_no']);
 
@@ -129,7 +129,7 @@ class Board_model extends CI_Model {
 		$this->db->set('isDel', true);
 		$this->db->where('comment_no', $idx);
 		$this->db->update('comment');
-		}
+	}
 	// file upload table
 	function file_upload($data){
 		$this->db->set('b_no', $data['b_no']);

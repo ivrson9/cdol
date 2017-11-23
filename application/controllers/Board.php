@@ -71,7 +71,7 @@ class Board extends MY_Controller {
 			'm_name'=>$this->uri->segment(3),
 			'title'=>$this->input->post('b_title'),
 			'content'=>str_replace(array("\r\n","\r","\n"),'',$this->input->post('b_content')),
-			'id'=>$this->session->userdata('id'),
+			'write_id'=>$this->session->userdata('id'),
 			'ip'=>$this->session->userdata('ip_address')
 			);
 
@@ -98,7 +98,7 @@ class Board extends MY_Controller {
 			'm_name'=>$this->uri->segment(3),
 			'title'=>$this->input->post('b_title'),
 			'content'=>str_replace(array("\r\n","\r","\n"),'',$this->input->post('b_content')),
-			'id'=>$this->session->userdata('id'),
+			'write_id'=>$this->session->userdata('id'),
 			'ip'=>$this->session->userdata('ip_address')
 			);
 
