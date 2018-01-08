@@ -1,10 +1,11 @@
 # query file #
 ##############
-dbquary.txt
-
+#dbquary.txt
+#kaffe_dbquary.txt
 .DS_Store
 
 application/cache/*
+application/config/*
 !application/cache/index.html
 !application/cache/.htaccess
 

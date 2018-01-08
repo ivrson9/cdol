@@ -191,7 +191,7 @@ class Cafe extends MY_Controller{
 
 					$google_detail_result = file_get_contents($detail_url.$detail_data, true);
 					$detail_get = json_decode($google_detail_result);
-					log_message('debug', $google_detail_result);
+					//log_message('debug', $google_detail_result);
 					// Name
 					$real_name = $detail_get->result->name;
 					$lat = $detail_get->result->geometry->location->lat;
@@ -204,8 +204,9 @@ class Cafe extends MY_Controller{
 					$postal_code = $address_components[6]->short_name;
 					$city = $address_components[3]->short_name;
 					$country = $address_components[5]->short_name;
-
-					$full_address = $street." ".$street_num.", ".$postal_code." ".$city.", ".$country;
+					//log_message('debug', "$city");
+					$full_address = $street." ".$street_num.", "
+									.$postal_code." ".$city.", ".$country;
 
 					// Opening Hour
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));
