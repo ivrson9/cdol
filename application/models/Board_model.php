@@ -58,7 +58,7 @@ class Board_model extends CI_Model {
 		if(!isset($data['list_num'])){
 			$query = $query." ORDER BY b_no desc LIMIT 0, 10";
 		} else {
-		$data['list_num'] = ($data['list_num']-1)* 10;
+			$data['list_num'] = ($data['list_num']-1)* 10;
 			$query = $query." ORDER BY b_no desc LIMIT ".$data['list_num'].", 10";
 		}
 

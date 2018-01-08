@@ -15,12 +15,12 @@ create table cafe (
   address text,
   latitude double,
   longitude double,
-  rating double unsigned,
+  rating double unsigned default 10,
   wifi int unsigned default 0,
   power int unsigned default 0,
   opening_hours text,
   google_id varchar(200),
-  isDel boolean default false
+  isDel boolean default false,
   etc text
 );
 INSERT INTO `cafe`(`name`, `address`, `latitude`, `longitude`) VALUES ('westberlin bar&shop', 'Friedrichstraße 215, 10969 Berlin', 52.505666, 13.390473 );

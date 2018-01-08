@@ -154,7 +154,7 @@ class Cafe extends MY_Controller{
 
 			$google_textsearch_result = file_get_contents($textsearch_url.$textsearch_data, true);
 			$textsearch_get = json_decode($google_textsearch_result);
-
+			//log_message('debug', $google_textsearch_result);
 			if(count($textsearch_get->results) == 0){
 				// 주소 검색 실패 메세지
 				return 2;
@@ -191,7 +191,7 @@ class Cafe extends MY_Controller{
 
 					$google_detail_result = file_get_contents($detail_url.$detail_data, true);
 					$detail_get = json_decode($google_detail_result);
-
+					log_message('debug', $google_detail_result);
 					// Name
 					$real_name = $detail_get->result->name;
 					$lat = $detail_get->result->geometry->location->lat;
@@ -199,14 +199,13 @@ class Cafe extends MY_Controller{
 
 					// Make Address
 					$address_components = $detail_get->result->address_components;
-					$street_num = $address_components[0];
-					$street = $address_components[1];
-					$postal_code = $address_components[6];
-					$city = $address_components[3];
-					$country = $address_components[5];
+					$street_num = $address_components[0]->short_name;
+					$street = $address_components[1]->short_name;
+					$postal_code = $address_components[6]->short_name;
+					$city = $address_components[3]->short_name;
+					$country = $address_components[5]->short_name;
 
-					$full_address = $street->short_name." ".$street_num->short_name.", "
-									.$postal_code->short_name." ".$city->short_name.", ".$country->short_name;
+					$full_address = $street." ".$street_num.", ".$postal_code." ".$city.", ".$country;
 
 					// Opening Hour
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));
