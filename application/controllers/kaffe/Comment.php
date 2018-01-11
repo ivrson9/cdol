@@ -41,14 +41,14 @@ class Comment {
 	}
 
 	function getList($con, $cafeNo){
-		$res = mysqli_query($con, "SELECT c.comment_no, u.name, c.comment, c.rating, c.comment_date, u.photo
-										FROM cafe_comment c join cafe_user u
-										WHERE c.cafe_no = ".$cafeNo." AND c.id = u.email AND c.isDel = FALSE ORDER BY c.comment_date DESC");
+		$res = mysqli_query($con, "SELECT c.comment_no, c.id, u.name, c.comment, c.rating, c.comment_date, u.photo
+										FROM cafe_comment c LEFT JOIN cafe_user u ON c.id = u.email
+										WHERE c.cafe_no = ".$cafeNo." AND c.isDel = FALSE ORDER BY c.comment_date DESC");
 
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('comment_no'=>$row[0], 'name'=>$row[1], 'comment'=>$row[2], 'rating'=>$row[3], 'comment_date'=>$row[4], 'photo'=>$row[5]));
+			array_push($result, array('comment_no'=>$row[0], 'email'=>$row[1], 'name'=>$row[2], 'comment'=>$row[3], 'rating'=>$row[4], 'comment_date'=>$row[5], 'photo'=>$row[6]));
 		}
 
 
