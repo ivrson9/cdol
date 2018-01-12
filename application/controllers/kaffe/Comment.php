@@ -48,7 +48,7 @@ class Comment {
 		$result = array();
 
 		while($row = mysqli_fetch_array($res)){
-			array_push($result, array('comment_no'=>$row[0], 'email'=>$row[1], 'name'=>$row[2], 'comment'=>$row[3], 'rating'=>$row[4], 'comment_date'=>$row[5], 'photo'=>$row[6]));
+			array_push($result, array('comment_no'=>$row[0], 'id'=>$row[1], 'name'=>$row[2], 'comment'=>$row[3], 'rating'=>$row[4], 'comment_date'=>$row[5], 'photo'=>$row[6]));
 		}
 
 

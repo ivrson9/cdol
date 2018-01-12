@@ -120,7 +120,10 @@ class Cafe extends MY_Controller{
 	}
 
 	function getZipLocation($zipcode){
-		$url = "http://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+		$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
+
+		$url = $url.$key;
 		$google_result = file_get_contents($url, true);
 		$jsonGet = json_decode($google_result);
 		$set = $jsonGet->results[0];
