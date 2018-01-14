@@ -209,23 +209,24 @@ class Cafe extends MY_Controller{
 								$premise = $value->short_name;
 								$full_address = $full_address.$premise.", ";
 								break;
-							case "street_number"
+							case "street_number":
+								echo $value->types[0];
 								$street_num = $value->short_name;
 								$full_address = $full_address.$premise." ";
 								break;
-							case "route"
+							case "route":
 								$street = $value->short_name;
 								$full_address = $full_address.$premise.", ";
 								break;
-							case "postal_code"
+							case "postal_code":
 								$postal_code = $value->short_name;
 								$full_address = $full_address.$premise." ";
 								break;
-							case "locality"
+							case "locality":
 								$city = $value->short_name;
 								$full_address = $full_address.$premise.",";
 								break;
-							case "country"
+							case "country":
 								$country = $value->short_name;
 								$full_address = $full_address.$premise;
 								break;
