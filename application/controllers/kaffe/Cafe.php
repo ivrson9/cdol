@@ -202,14 +202,44 @@ class Cafe extends MY_Controller{
 
 					// Make Address
 					$address_components = $detail_get->result->address_components;
-					$street_num = $address_components[0]->short_name;
-					$street = $address_components[1]->short_name;
-					$postal_code = $address_components[6]->short_name;
-					$city = $address_components[3]->short_name;
-					$country = $address_components[5]->short_name;
-					//log_message('debug', "$city");
-					$full_address = $street." ".$street_num.", "
-									.$postal_code." ".$city.", ".$country;
+					$full_address = "";
+					foreach ($address_components as $value){
+						switch($value->types[0]){
+							case "premise":
+								$premise = $value->short_name;
+								$full_address = $full_address.$premise.", ";
+								break;
+							case "street_number"
+								$street_num = $value->short_name;
+								$full_address = $full_address.$premise." ";
+								break;
+							case "route"
+								$street = $value->short_name;
+								$full_address = $full_address.$premise.", ";
+								break;
+							case "postal_code"
+								$postal_code = $value->short_name;
+								$full_address = $full_address.$premise." ";
+								break;
+							case "locality"
+								$city = $value->short_name;
+								$full_address = $full_address.$premise.",";
+								break;
+							case "country"
+								$country = $value->short_name;
+								$full_address = $full_address.$premise;
+								break;
+						}
+					}
+
+					// $street_num = $address_components[0]->short_name;
+					// $street = $address_components[1]->short_name;
+					// $postal_code = $address_components[6]->short_name;
+					// $city = $address_components[3]->short_name;
+					// $country = $address_components[5]->short_name;
+					// //log_message('debug', "$city");
+					// $full_address = $street." ".$street_num.", "
+					// 				.$postal_code." ".$city.", ".$country;
 
 					// Opening Hour
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));
