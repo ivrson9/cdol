@@ -50,8 +50,8 @@ class Cafe extends MY_Controller{
 					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 					AS distance
 					FROM cafe
-					WHERE zipcode = ".$zipcode;
-
+					WHERE zipcode = ".$zipcode." ORDER BY distance";
+			echo $sql;
 			$zipLocation = $this->getZipLocation($zipcode);
 		}
 
@@ -207,27 +207,21 @@ class Cafe extends MY_Controller{
 						switch($value->types[0]){
 							case "premise":
 								$premise = $value->short_name;
-								$full_address = $full_address.$premise.", ";
 								break;
 							case "route":
 								$street = $value->short_name;
-								$full_address = $full_address.$street." ";
 								break;
 							case "street_number":
 								$street_num = $value->short_name;
-								$full_address = $full_address.$street_num.", ";
 								break;
 							case "postal_code":
 								$postal_code = $value->short_name;
-								$full_address = $full_address.$postal_code." ";
 								break;
 							case "locality":
 								$city = $value->short_name;
-								$full_address = $full_address.$city.",";
 								break;
 							case "country":
 								$country = $value->short_name;
-								$full_address = $full_address.$country;
 								break;
 							default: ;
 						}
@@ -239,8 +233,8 @@ class Cafe extends MY_Controller{
 					// $city = $address_components[3]->short_name;
 					// $country = $address_components[5]->short_name;
 					// //log_message('debug', "$city");
-					// $full_address = $street." ".$street_num.", "
-					// 				.$postal_code." ".$city.", ".$country;
+					$full_address = $premise.", ".$street." ".$street_num.", "
+									.$postal_code." ".$city.", ".$country;
 
 					// Opening Hour
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));

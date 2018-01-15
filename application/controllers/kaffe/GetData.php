@@ -18,7 +18,7 @@ class GetData {
 		mysqli_set_charset($con,"utf8");
 
 		if( $function == "cafeL") {
-			$zipcode = (empty($_GET['zip']))? "" : $_GET['zip'];
+			$zipcode = (empty($_GET['zipcode']))? "" : $_GET['zipcode'];
 			$latitude = (empty($_GET['lat']))? "" : $_GET['lat'];
 			$longitude = (empty($_GET['lng']))? "" : $_GET['lng'];
 			$bookmark = (empty($_GET['bookmark']))? "" : $_GET['bookmark'];
