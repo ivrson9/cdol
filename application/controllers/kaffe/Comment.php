@@ -40,6 +40,45 @@ class Comment {
 		}
 	}
 
+	function modComment($con, $cafeNo, $id, $comment, $rating){
+		// DB Update
+		$sql = "UPDATE cafe_comment 
+				SET comment = '". $comment ."', comment_date = NOW(), rating = ". (float)$rating .
+				" WHERE id ='". $id . "' AND cafe_no = ". $cafeNo;
+				
+		
+		if (mysqli_query($con, $sql)) {
+			$cafeGetsql = "SELECT rating FROM cafe WHERE no = ".$cafeNo ;
+
+			$row = mysqli_fetch_row(mysqli_query($con, $cafeGetsql));
+			
+			if($row[0] == 10.0){
+				$newRating = $rating;
+			} else {
+				$newRating = ($rating+$row[0])/2;
+				$newRating = round($newRating, 1);
+
+				$decimal = $newRating - round($newRating, 0);
+				
+				if($decimal > 0.5){
+					$newRating = ceil($newRating);
+				} else if($decimal < 0.5){
+					$newRating = floor($newRating);
+				}
+			}
+
+			$newRatingSetSql = "UPDATE cafe SET rating = ". $newRating ." WHERE no = ". $cafeNo;
+
+			if(mysqli_query($con, $newRatingSetSql)){
+				echo "Record updated successfully";
+			} else {
+				echo "Error updating record: " . mysqli_error($con);
+			}
+		} else {
+			echo "Error updating record: " . mysqli_error($con);
+		}
+	}
+
 	function getList($con, $cafeNo){
 		$res = mysqli_query($con, "SELECT c.comment_no, c.id, u.name, c.comment, c.rating, c.comment_date, u.photo
 										FROM cafe_comment c LEFT JOIN cafe_user u ON c.id = u.email
