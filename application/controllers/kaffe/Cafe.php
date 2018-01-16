@@ -119,17 +119,17 @@ class Cafe extends MY_Controller{
 		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
 	}
 
-	// function getZipLocation($zipcode){
-	// 	$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
-	// 	$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
+	function getZipLocation($zipcode){
+		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+		$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
-	// 	$url = $url.$key;
-	// 	$google_result = file_get_contents($url, true);
-	// 	$jsonGet = json_decode($google_result);
-	// 	$set = $jsonGet->results[0];
+		$url = $url.$key;
+		$google_result = file_get_contents($url, true);
+		$jsonGet = json_decode($google_result);
+		$set = $jsonGet->results[0];
 
-	// 	return $set->geometry->location;
-	// }
+		return $set->geometry->location;
+	}
 
 	function getGoogleData($data){
 		$geoCoding_url = "https://maps.googleapis.com/maps/api/geocode/json?";
