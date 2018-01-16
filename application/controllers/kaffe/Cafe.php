@@ -51,7 +51,7 @@ class Cafe extends MY_Controller{
 					AS distance
 					FROM cafe
 					WHERE zipcode = ".$zipcode." ORDER BY distance";
-			echo $sql;
+			
 			$zipLocation = $this->getZipLocation($zipcode);
 		}
 
@@ -119,16 +119,39 @@ class Cafe extends MY_Controller{
 		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
 	}
 
-	function getZipLocation($zipcode){
-		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
-		$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
+	// function getZipLocation($zipcode){
+	// 	$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+	// 	$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
-		$url = $url.$key;
-		$google_result = file_get_contents($url, true);
-		$jsonGet = json_decode($google_result);
-		$set = $jsonGet->results[0];
+	// 	$url = $url.$key;
+	// 	$google_result = file_get_contents($url, true);
+	// 	$jsonGet = json_decode($google_result);
+	// 	$set = $jsonGet->results[0];
 
-		return $set->geometry->location;
+	// 	return $set->geometry->location;
+	// }
+
+	function getGoogleData($data){
+		$geoCoding_url = "https://maps.googleapis.com/maps/api/geocode/json?";
+		$key = "AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
+		
+		$data_set = http_build_query(
+				array(
+					'address' => $data,
+					'key' => $key
+				)
+			);
+
+		$google_geocode_result = file_get_contents($geoCoding_url.$data_set, true);
+		$geocode_get = json_decode($google_geocode_result);
+		
+		if(count($geocode_get->results) == 0){
+			return 2;
+		} else {
+			$location = $geocode_get->results[0]->geometry->location;
+		}
+
+		echo $google_geocode_result;
 	}
 
 	// 장소 id(place_id) 가져온 후 opening data 가져옴
@@ -145,7 +168,7 @@ class Cafe extends MY_Controller{
 			$textsearch_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
 			$search_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 			$detail_url = "https://maps.googleapis.com/maps/api/place/details/json?";
-			$key = 'AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE';
+			$key = "AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
 			// Textsearch
 			$textsearch_data = http_build_query(

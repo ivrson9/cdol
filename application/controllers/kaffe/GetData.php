@@ -105,6 +105,11 @@ class GetData {
 			}
 			$json = json_encode($return_array);
 			echo $json;
+		} else if($function == "googleGeo"){
+			$address = $_GET['address'];
+
+			$cafe = new Cafe();
+			$cafe->getGoogleData($address);
 		}
 
 		mysqli_close($con);
