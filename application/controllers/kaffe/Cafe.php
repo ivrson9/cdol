@@ -120,7 +120,7 @@ class Cafe extends MY_Controller{
 	}
 
 	function getZipLocation($zipcode){
-		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode." Berlin";
 		$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
 		$url = $url.$key;
@@ -137,19 +137,19 @@ class Cafe extends MY_Controller{
 		
 		$data_set = http_build_query(
 				array(
-					'address' => $data."%20Berlin",
+					'address' => $data." Berlin",
 					'key' => $key
 				)
 			);
 
 		$google_geocode_result = file_get_contents($geoCoding_url.$data_set, true);
-		$geocode_get = json_decode($google_geocode_result);
+		// $geocode_get = json_decode($google_geocode_result);
 		
-		if(count($geocode_get->results) == 0){
-			return 2;
-		} else {
-			$location = $geocode_get->results[0]->geometry->location;
-		}
+		// if(count($geocode_get->results) == 0){
+		// 	return 2;
+		// } else {
+		// 	$location = $geocode_get->results[0]->geometry->location;
+		// }
 
 		echo $google_geocode_result;
 	}
