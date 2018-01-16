@@ -137,7 +137,7 @@ class Cafe extends MY_Controller{
 		
 		$data_set = http_build_query(
 				array(
-					'address' => $data,
+					'address' => $data."%20Berlin",
 					'key' => $key
 				)
 			);
