@@ -109,7 +109,9 @@ class GetData {
 			$address = $_GET['address'];
 
 			$cafe = new Cafe();
-			$cafe->getGoogleData($address);
+			$result = $cafe->getGoogleData($address);
+
+			echo $result;
 		}
 
 		mysqli_close($con);

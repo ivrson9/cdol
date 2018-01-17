@@ -52,7 +52,10 @@ class Cafe extends MY_Controller{
 					FROM cafe
 					WHERE zipcode = ".$zipcode." ORDER BY distance";
 			
-			$zipLocation = $this->getZipLocation($zipcode);
+			$google_result = $this->getGoogleData($zipcode);
+			$jsonGet = json_decode($google_result);
+			$set = $jsonGet->results[0];
+			$zipLocation = $set->geometry->location;
 		}
 
 		$res = mysqli_query($con, $sql);
@@ -66,8 +69,9 @@ class Cafe extends MY_Controller{
 		}
 
 		$return_array = array("result"=>$result);
+		
 		if($zipcode != ""){
-			$return_array += ["zipLocation"=>$zipLocation];
+			$return_array["zipLocation"] = $zipLocation;
 		}
 		
 		$json = json_encode($return_array);
@@ -119,17 +123,17 @@ class Cafe extends MY_Controller{
 		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
 	}
 
-	function getZipLocation($zipcode){
-		$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode." Berlin";
-		$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
+	// function getZipLocation($zipcode){
+	// 	$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipcode."%20Berlin";
+	// 	$key = "&key=AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
-		$url = $url.$key;
-		$google_result = file_get_contents($url, true);
-		$jsonGet = json_decode($google_result);
-		$set = $jsonGet->results[0];
+	// 	$url = $url.$key;
+	// 	$google_result = file_get_contents($url, true);
+	// 	$jsonGet = json_decode($google_result);
+	// 	$set = $jsonGet->results[0];
 
-		return $set->geometry->location;
-	}
+	// 	return $set->geometry->location;
+	// }
 
 	function getGoogleData($data){
 		$geoCoding_url = "https://maps.googleapis.com/maps/api/geocode/json?";
@@ -151,7 +155,7 @@ class Cafe extends MY_Controller{
 		// 	$location = $geocode_get->results[0]->geometry->location;
 		// }
 
-		echo $google_geocode_result;
+		return $google_geocode_result;
 	}
 
 	// 장소 id(place_id) 가져온 후 opening data 가져옴
