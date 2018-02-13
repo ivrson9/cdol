@@ -52,3 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = 'prep_page/';
 $route['translate_uri_dashes'] = FALSE;
+
+
+// Restful
+// $route['board/(.+)/post/(\d+)']['get'] = 'board/modify/$1/$2';			// 게시글 수정페이지 이동
+// $route['board/(.+)/post/(\d+)']['put'] = 'board/modify_board/$1/$2';	// 게시글 수정
+// $route['board/(.+)/post/(\d+)']['delete'] = 'board/delete/$1/$2';		// 게시글 삭제
+// $route['board/(.+)/post']['get'] = 'board/write/$1';					// 게시글 작성페이지 이동
+// $route['board/(.+)/post']['post'] = 'board/write_board/$1/$2';			// 게시글 작성
+// $route['board/(.+)/(\d+)']['get'] = 'board/view/$1/$2';					// 게시글 상세
+// $route['board/(.+)']['get'] = 'board/lists/$1';
+
+// $route['api/(.+)/(.+)/(.+)']['post'] = '$1/$2/{Function 이름}/$3';
+// $route['api/(.+)/(.+)/(.+)']['delete'] = '$1/$2/{Function 이름}/$3';
+// $route['api/(.+)/(.+)/(.+)']['put'] = '$1/$2/{Function 이름}/$3';

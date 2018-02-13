@@ -124,7 +124,7 @@ class Board extends MY_Controller {
 		echo "<script>location.replace('/cdol/board/view/".$data['m_name']."?cnt=".$data['list_num']."&b_no=".$data['b_no']."')</script>";
 	}
 
-	function del(){
+	function delete(){
 		$data = array(
 			'b_no'=>$this->uri->segment(4),
 			'm_name'=>$this->uri->segment(3),

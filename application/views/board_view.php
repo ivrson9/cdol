@@ -167,7 +167,7 @@
 if($this->session->userdata('id') == $view->write_id) {
 ?>
 						<a href="javascript:boardModify()" class="btn btn-primary btn-sm">수정하기</a>
-						<a href="/cdol/board/del/<?=$name?>/<?=$view->b_no?>" id="delete" class="btn btn-danger btn-sm">삭제하기</a>
+						<a href="/cdol/board/delete/<?=$name?>/<?=$view->b_no?>" id="delete" class="btn btn-danger btn-sm">삭제하기</a>
 <?php
 }
 ?>
