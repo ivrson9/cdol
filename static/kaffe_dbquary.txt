@@ -6,6 +6,7 @@ GRANT ALL PRIVILEGES ON cdol.* to cdol@localhost;
 // List Table (Rating default 10)
 // wifi : none, restricted, not free, free
 // power : none, a few, several
+// seat : 5+, 10+, 15+, 20+
 create table cafe (
   no int unsigned not null primary key auto_increment,
   name varchar(100) not null,
@@ -18,7 +19,10 @@ create table cafe (
   rating double unsigned default 10,
   wifi int unsigned default 0,
   power int unsigned default 0,
+  seat int unsigned default 0,
   opening_hours text,
+  photo_reference text,
+  photo_route text,
   google_id varchar(200),
   isDel boolean default false,
   etc text
@@ -55,6 +59,7 @@ create table cafe_add (
   address text,
   wifi int unsigned default 0,
   power int unsigned default 0,
+  seat int unsigned default 0,
   isDone int unsigned default 0
 );
 

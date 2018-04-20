@@ -13,6 +13,9 @@
 
 			<label for="inputPassword" class="sr-only">Power</label>
 			<input type="text" id="power" name="power" class="form-control" placeholder="Power" required>
+			
+			<label for="inputPassword" class="sr-only">Seat</label>
+			<input type="text" id="seat" name="seat" class="form-control" placeholder="Seat" required>
 
 			<button class="btn btn-primary" type="submit">Find</button>
 		</form>
@@ -91,6 +94,7 @@
 					<td align="center" width="180"><strong>Address</strong></td>
 					<td align="center" width="10"><strong>Wifi</strong></td>
 					<td align="center" width="10"><strong>Power</strong></td>
+					<td align="center" width="10"><strong>Seat</strong></td>
 					<td align="center" width="10"><strong>isDone</strong></td>
 				</tr>
 			</thead>
@@ -108,6 +112,7 @@ foreach($board_list as $entry){
 				<td align="center"><?=$entry->address?></td>
 				<td align="center"><?=$entry->wifi?></td>
 				<td align="center"><?=$entry->power?></td>
+				<td align="center"><?=$entry->seat?></td>
 				<td align="center"><?=$entry->isDone?></td>
 			</tr>
 <?php

@@ -21,7 +21,10 @@ class Cafe_model extends CI_Model {
         $this->db->set('longitude', (float)$option['lng']);
         $this->db->set('wifi', (int)$option['wifi']);
         $this->db->set('power', (int)$option['power']);
+        $this->db->set('seat', (int)$option['seat']);
         $this->db->set('opening_hours', $option['opening_hours']);
+        $this->db->set('photo_reference', $option['photo_reference']);
+        $this->db->set('photo_route', $option['photo_route']);
         $this->db->set('google_id', $option['google_id']);
         $this->db->insert('cafe');
         $result = $this->db->insert_id();
@@ -55,19 +58,20 @@ class Cafe_model extends CI_Model {
         $this->db->set('address', $data['address']);
         $this->db->set('wifi', $data['wifi']);
         $this->db->set('power', $data['power']);
+        $this->db->set('seat', $data['seat']);
         $this->db->insert('cafe_add');
         $result = $this->db->insert_id();
         return $result;
     }
 
     function get_addValue($no){
-        $result = $this->db->query("SELECT add_no, name, address, wifi, power FROM cafe_add WHERE add_no = ".$no)->row();
+        $result = $this->db->query("SELECT add_no, name, address, wifi, power, seat FROM cafe_add WHERE add_no = ".$no)->row();
         //$result = $this->db->get_where($name, array('b_no'=>$b_no))->row();
         return $result;
     }
     // List
     function getAdd_list($data){
-        $select = "SELECT add_no, name, address, wifi, power, isDone FROM cafe_add ";
+        $select = "SELECT add_no, name, address, wifi, power, seat, isDone FROM cafe_add ";
 
         // 관리자 모드 체크
         if($data['adm'] == true){

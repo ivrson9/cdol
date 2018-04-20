@@ -13,7 +13,7 @@ class Cafe extends MY_Controller{
 	function getList($con, $latitude, $longitude, $bookmark, $zipcode){
 		if($zipcode == ""){
 			if( $bookmark == ""){
-				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
 						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 						AS distance
 						FROM cafe
@@ -29,7 +29,7 @@ class Cafe extends MY_Controller{
 				// 		ORDER BY distance
 				// 		LIMIT 0,1000";
 			} else {
-				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
 						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 						AS distance
 						FROM cafe
@@ -46,7 +46,7 @@ class Cafe extends MY_Controller{
 				$sql = $sql.") ORDER BY distance";
 			}
 		} else {
-			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,opening_hours,google_id,
+			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
 					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 					AS distance
 					FROM cafe
@@ -65,7 +65,7 @@ class Cafe extends MY_Controller{
 			$google_id = $row[9];
 
 			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5],
-				'wifi'=>$row[6], 'power'=>$row[7], 'opening_hours'=>$row[8], 'distance'=>$row[10]));
+				'wifi'=>$row[6], 'power'=>$row[7], 'seat'=>$row[8], 'opening_hours'=>$row[9], 'photo_reference'=>$row[10], 'photo_route'=>$row[11], 'distance'=>$row[13]));
 		}
 
 		$return_array = array("result"=>$result);
@@ -79,8 +79,8 @@ class Cafe extends MY_Controller{
 		echo $json;
 	}
 
-	function addWait($con, $name, $address, $wifi, $power){
-		$sql = "INSERT INTO cafe_add (name, address, wifi, power) VALUES ('". $name ."', '". $address ."', '". $wifi ."', '". $power ."')";
+	function addWait($con, $name, $address, $wifi, $power, $seat){
+		$sql = "INSERT INTO cafe_add (name, address, wifi, power, seat) VALUES ('". $name ."', '". $address ."', '". $wifi ."', '". $power ."', '". $seat .")";
 
 		if (mysqli_query($con, $sql)) {
 			echo "Record updated successfully";
@@ -94,7 +94,8 @@ class Cafe extends MY_Controller{
 			'name'=>$this->input->post('name'),
 			'address'=>$this->input->post('address'),
 			'wifi'=>$this->input->post('wifi'),
-			'power'=>$this->input->post('power')
+			'power'=>$this->input->post('power'),
+			'seat'=>$this->input->post('seat')
 			);
 
 		$this->cafe_model->addWait($data);
@@ -168,10 +169,12 @@ class Cafe extends MY_Controller{
 			$address = $row->address;
 			$wifi = $row->wifi;
 			$power = $row->power;
+			$seat = $row->seat;
 
 			$textsearch_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
 			$search_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 			$detail_url = "https://maps.googleapis.com/maps/api/place/details/json?";
+			$photo_url = "https://maps.googleapis.com/maps/api/place/photo?";
 			$key = "AIzaSyBiUSaxkuWEKQahdB0bn2misQjwutBnRIE";
 
 			// Textsearch
@@ -221,7 +224,8 @@ class Cafe extends MY_Controller{
 
 					$google_detail_result = file_get_contents($detail_url.$detail_data, true);
 					$detail_get = json_decode($google_detail_result);
-					//log_message('debug', $google_detail_result);
+					// log_message('debug', $detail_get->result->photos[0]->photo_reference);
+
 					// Name
 					$real_name = $detail_get->result->name;
 					$lat = $detail_get->result->geometry->location->lat;
@@ -230,6 +234,12 @@ class Cafe extends MY_Controller{
 					// Make Address
 					$address_components = $detail_get->result->address_components;
 					$full_address = "";
+					$premise = "";
+					$street = "";
+					$street_num = "";
+					$postal_code = "";
+					$country = "";
+
 					foreach ($address_components as $value){
 						switch($value->types[0]){
 							case "premise":
@@ -266,6 +276,34 @@ class Cafe extends MY_Controller{
 					// Opening Hour
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));
 
+					// Photos
+					$photos_set = $detail_get->result->photos;
+					$photo_array = array();
+					array_push($photo_array, $photos_set[0]->photo_reference);
+					array_push($photo_array, $photos_set[1]->photo_reference);
+					array_push($photo_array, $photos_set[2]->photo_reference);
+					// Photo reference
+					$photo_reference = json_encode(array("photos"=>$photo_array));
+					// Photo route
+					$photo_route = array();
+					$photo_data = http_build_query(
+						array(
+							'maxwidth' => 400,
+							'key' => $key
+						)
+					);
+
+					foreach ($photo_array as $num => $value) {
+						$google_search_result = file_get_contents($photo_url.$photo_data."&photo_reference=".$value, true);
+						$fp = fopen("./uploads/cafe_photo/".$real_name.$num.".jpg", "w");
+						fwrite($fp, $google_search_result);
+						fclose($fp);
+						array_push($photo_route, "cafe_photo/".$real_name.$num.".jpg");
+					}
+
+
+
+					// Result
 					$data = array(
 						'name'=>$real_name,
 						'country'=>$country,
@@ -276,7 +314,10 @@ class Cafe extends MY_Controller{
 						'lng'=>$lng,
 						'wifi'=>$wifi,
 						'power'=>$power,
+						'seat'=>$seat,
 						'opening_hours'=>$periods,
+						'photo_reference'=>$photo_reference,
+						'photo_route'=>json_encode($photo_route),
 						'google_id'=>$place_id);
 
 					return $data;

@@ -30,9 +30,10 @@ class GetData {
 			$address = $_GET['address'];
 			$wifi = $_GET['wifi'];
 			$power = $_GET['power'];
+			$seat = $_GET['seat'];
 
 			$cafe = new Cafe();
-			$cafe->addWait($con, $name, $address, $wifi, $power);
+			$cafe->addWait($con, $name, $address, $wifi, $power, $seat);
 		} else if ($function == "comL"){
 			$no=$_GET['no'];
 
