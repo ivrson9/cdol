@@ -271,6 +271,9 @@ class Cafe extends MY_Controller{
 					$full_address = $premise.", ".$street." ".$street_num.", "
 									.$postal_code." ".$city.", ".$country;
 
+					// Rating
+					$rating = $detail_get->result->rating;
+
 					// Opening Hour
 					if($detail_get->result->opening_hours->periods == null){
 						return 4;
@@ -313,6 +316,7 @@ class Cafe extends MY_Controller{
 						'address'=>$full_address,
 						'lat'=>$lat,
 						'lng'=>$lng,
+						'rating'=>$rating,
 						'wifi'=>$wifi,
 						'power'=>$power,
 						'seat'=>$seat,
