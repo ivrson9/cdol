@@ -77,7 +77,7 @@ class Cafe_model extends CI_Model {
         if($data['adm'] == true){
             $query = $select." WHERE 1=1";
         } else {
-            $query = $select." WHERE isDone not like 4";
+            $query = $select." WHERE isDone not like 5";
         }
 
         // 페이징

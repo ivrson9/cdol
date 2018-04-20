@@ -110,16 +110,14 @@ class Cafe extends MY_Controller{
 		for($cnt=0 ; $cnt < $count ; $cnt++){
 			$data = $this->setGoogleData($list[$cnt]);
 
-			if($data == 1 || $data == 2 || $data == 3){
+			if($data == 1 || $data == 2 || $data == 3 || $data == 4){
 				// Update
 				$this->cafe_model->updateAdd_list($list[$cnt], $data);
 			} else {
 				$this->cafe_model->add($data);
-				$this->cafe_model->updateAdd_list($list[$cnt], 4);
+				$this->cafe_model->updateAdd_list($list[$cnt], 5);
 			}
 		}
-
-
 
 		echo "<script>location.replace('/cdol/page/cafe_add')</script>";
 	}
@@ -160,7 +158,7 @@ class Cafe extends MY_Controller{
 	}
 
 	// 장소 id(place_id) 가져온 후 opening data 가져옴
-	// return : 0 = ready , 1 = not have data , 2 = fail address , 3 = cannot found cafe , 4 = Done
+	// return : 0 = ready , 1 = not have data , 2 = fail address , 3 = cannot found cafe , 4 = Close, 5 = Done
 	function setGoogleData($no){
 		$row = $this->cafe_model->get_addValue($no);
 
@@ -274,6 +272,9 @@ class Cafe extends MY_Controller{
 									.$postal_code." ".$city.", ".$country;
 
 					// Opening Hour
+					if($detail_get->result->opening_hours->periods == null){
+						return 4;
+					}
 					$periods = json_encode(array("periods"=>$detail_get->result->opening_hours->periods));
 
 					// Photos
