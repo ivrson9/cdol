@@ -13,7 +13,7 @@ class Cafe extends MY_Controller{
 	function getList($con, $latitude, $longitude, $bookmark, $zipcode){
 		if($zipcode == ""){
 			if( $bookmark == ""){
-				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_route,google_id,
 						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 						AS distance
 						FROM cafe
@@ -29,7 +29,7 @@ class Cafe extends MY_Controller{
 				// 		ORDER BY distance
 				// 		LIMIT 0,1000";
 			} else {
-				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
+				$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_route,google_id,
 						(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 						AS distance
 						FROM cafe
@@ -46,7 +46,7 @@ class Cafe extends MY_Controller{
 				$sql = $sql.") ORDER BY distance";
 			}
 		} else {
-			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_reference,photo_route,google_id,
+			$sql = "SELECT no,name,address,latitude,longitude,rating,wifi,power,seat,opening_hours,photo_route,google_id,
 					(6371*acos(cos(radians(".$latitude."))*cos(radians(latitude))*cos(radians(longitude)-radians(".$longitude."))+sin(radians(".$latitude."))*sin(radians(latitude))))
 					AS distance
 					FROM cafe
@@ -65,7 +65,7 @@ class Cafe extends MY_Controller{
 			$google_id = $row[9];
 
 			array_push($result, array('no'=>$row[0], 'name'=>$row[1], 'address'=>$row[2], 'latitude'=>$row[3], 'longitude'=>$row[4], 'rating'=>$row[5],
-				'wifi'=>$row[6], 'power'=>$row[7], 'seat'=>$row[8], 'opening_hours'=>$row[9], 'photo_reference'=>$row[10], 'photo_route'=>$row[11], 'distance'=>$row[13]));
+				'wifi'=>$row[6], 'power'=>$row[7], 'seat'=>$row[8], 'opening_hours'=>$row[9], 'photo_route'=>$row[10], 'distance'=>$row[12]));
 		}
 
 		$return_array = array("result"=>$result);

@@ -39,6 +39,7 @@
 							for (var x = 0; x < ins; x++) {
 								form_data.append("board_file[]", document.getElementById('multiFiles').files[x]);
 							}
+							form_data.append("type", "write");
 
 							$.ajax({
 								url: '/cdol/board/fileUpload/<?=$name?>',
@@ -57,8 +58,8 @@
 									$('#writeForm').attr('action','/cdol/board/write_board/<?=$name?>').submit();
 								},
 								error: function (request,status,error){
-									//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-									alert("파일 업로드가 실패 하였습니다.");
+									alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+									// alert("파일 업로드가 실패 하였습니다.");
 									return false;
 								}
 							});

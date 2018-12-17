@@ -25,31 +25,49 @@
 
 	<!-- Custom styles for this template -->
 	<div class="col-sm-offset-3 col-md-offset-2 main">
-		<form action="/cdol/kaffe/cafe/addWait_onWeb" method="POST" enctype="multipart/form-data">
-			<label for="inputEmail" class="sr-only">Address</label>
-			<input type="text" id="address" name="address" class="form-control" placeholder="Address" required autofocus>
+		<div class="row">
+			<form action="/cdol/kaffe/cafe/addWait_onWeb" method="POST" enctype="multipart/form-data">
+				<div class="col-xs-6 col-md-4">
+					<label for="inputEmail" class="sr-only">Address</label>
+					<input type="text" id="address" name="address" class="form-control" placeholder="Address" required autofocus>
 
-			<label for="inputPassword" class="sr-only">Name</label>
-			<input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+					<label for="inputPassword" class="sr-only">Name</label>
+					<input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
 
-			<label for="inputPassword" class="sr-only">Wifi</label>
-			<input type="text" id="wifi" name="wifi" class="form-control" placeholder="Wifi" required>
+					<label for="inputPassword" class="sr-only">Wifi</label>
+					<input type="text" id="wifi" name="wifi" class="form-control" placeholder="Wifi" required>
+				</div>
+				<div class="col-xs-6 col-md-4">
+					<label for="inputPassword" class="sr-only">Power</label>
+					<input type="text" id="power" name="power" class="form-control" placeholder="Power" required>
+					
+					<label for="inputPassword" class="sr-only">Seat</label>
+					<input type="text" id="seat" name="seat" class="form-control" placeholder="Seat" required>
 
-			<label for="inputPassword" class="sr-only">Power</label>
-			<input type="text" id="power" name="power" class="form-control" placeholder="Power" required>
-			
-			<label for="inputPassword" class="sr-only">Seat</label>
-			<input type="text" id="seat" name="seat" class="form-control" placeholder="Seat" required>
-
-			<button class="btn btn-primary" type="submit">Find</button>
-		</form>
+					<button class="btn btn-primary" type="submit">Find</button>
+				</div>
+				<div class="col-xs-6 col-md-4">
+					
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="col-sm-offset-3 col-md-offset-2 main">
-		<p> Excel -> Google(Find Location) -> Json </p>
-		<form action="/cdol/kaffe/cafe/convertExcel" method="POST" enctype="multipart/form-data">	
-			<input type="file" name="cafe_excel">
-			<input type="submit" value="파일 전송" />
-		</form>
+		<div class="row">
+			<form action="/cdol/kaffe/cafe/convertExcel" method="POST" enctype="multipart/form-data">	
+				<div class="col-xs-6 col-md-4">
+					<p> Excel -> Google(Find Location) -> Json </p>
+					
+					<input type="file" name="cafe_excel">
+				</div>
+				<div class="col-xs-6 col-md-4">
+					<input type="submit" value="파일 전송" />
+				</div>
+				<div class="col-xs-6 col-md-4">
+
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<div class="col-sm-offset-3 col-md-offset-2 main">
@@ -163,7 +181,7 @@ foreach($board_list as $entry){
 		</div>
 		<div class="row">
 			<div class="col-md-12" style="text-align:right">
-				<a class="btn btn-default" id="add_btn">Write</a>
+				<a class="btn btn-default" id="add_btn">Submit</a>
 			</div>
 		</div>
 		<!-- 페이징 처리 -->

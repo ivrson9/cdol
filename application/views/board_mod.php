@@ -4,6 +4,7 @@
 				<form id="modifyForm" name="modifyForm" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="b_no" value="<?=$view->b_no?>" />
 					<input type="hidden" name="list_num" value="<?=$list_num?>" />
+					<input type="hidden" name="type" id="type" value="modify" />
 					<table class="table">
 						<tr>
 							<td width="70"><strong>아이디 : </strong></td>
@@ -83,6 +84,8 @@
 									form_data.append("board_file[]", document.getElementById('multiFiles').files[x]);
 								}
 								form_data.append("b_no", "<?=$view->b_no?>");
+								form_data.append("type", "write");
+								
 								$.ajax({
 									url: '/cdol/board/fileUpload/<?=$name?>',
 									data: form_data,

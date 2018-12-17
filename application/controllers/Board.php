@@ -154,11 +154,12 @@ class Board extends MY_Controller {
 	function fileUpload(){
 		$this->load->library('common');
 		$boardName = $this->uri->segment(3);
-		if($this->uri->segment(2) == 'write'){
+		log_message('debug', "+++++++++");
+		if($this->input->post('type') == 'write'){
 			$result = $this->board_model->get_bno($this->uri->segment(3));
 			$b_no = $result->b_no + 1;
-		} else if($this->uri->segment(2) == 'modify') {
-			$this->input->post('b_no');
+		} else if($this->input->post('type') == 'modify') {
+			$b_no = $this->input->post('b_no');
 		}
 
 		try {
